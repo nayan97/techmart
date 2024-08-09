@@ -15,13 +15,13 @@
 	<body class="hold-transition login-page">
 		<div class="login-box">
 			<!-- /.login-logo -->
+			@include('admin.validate')
 			<div class="card card-outline card-primary">
 			  	<div class="card-header text-center">
 					<a href="#" class="h3">Administrative Panel</a>
 			  	</div>
 			  	<div class="card-body">
 					<p class="login-box-msg">Sign in to start your session</p>
-
 					<form action="{{ route('admin.authenticate')}}" method="post">
 						@csrf
 				  		<div class="input-group mb-3">

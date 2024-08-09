@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <h1>hello world</h1>
+    <br>
+    <a href="{{route('admin.logout')}}">Logout</a>
 </head>
 <body>
     

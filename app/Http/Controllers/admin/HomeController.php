@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,4 +13,16 @@ class HomeController extends Controller
         // echo "welcome";
         
     }
+
+    
+    // logout method
+
+    public function logout(){
+
+        $admin = Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
+
+
+    }
+
 }
