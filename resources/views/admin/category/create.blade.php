@@ -21,31 +21,69 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">								
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Name">	
+
+            <form action="" method="post" id="catForm" name="catForm">
+                <div class="card">
+                    <div class="card-body">								
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name">	
+                                </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">	
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="1">On</option>
+                                        <option value="0">Off</option>
+                                    </select>
+                                </div>
+                            </div>										
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="email">Slug</label>
-                                <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">	
-                            </div>
-                        </div>									
-                    </div>
-                </div>							
-            </div>
-            <div class="pb-5 pt-3">
-                <button class="btn btn-primary">Create</button>
-                <a href="brands.html" class="btn btn-outline-dark ml-3">Cancel</a>
-            </div>
+                    </div>							
+                </div>
+                <div class="pb-5 pt-3">
+                    <button class="btn btn-primary">Create</button>
+                    <a href="brands.html" class="btn btn-outline-dark ml-3">Cancel</a>
+                </div>
+            </form>
+        
         </div>
         <!-- /.card -->
     </section>
     <!-- /.content -->
 </div>
+
+
+@endsection
+@section('customJs')
+
+<script>
+    $("#catForm").submit(function(event) {
+        event.preventDefault(); 
+        var element =  $(this);
+
+        $.ajax({
+            url:'{{ route("category.store")}}',
+            type:'post',
+            data: element.serializeArray(),
+            dataType:'json',
+            success: function(response){
+
+            }, error: function(jqXHR, exception){
+
+            }
+
+        });
+    });
+</script>
+    
 @endsection
