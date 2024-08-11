@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +37,21 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->passes()){
+
+            $category = new Category();
+            $category -> name = $request->name;
+            $category -> slug = Str::slug($request -> name);
+            $category -> status = $request->status;
+            $category -> save();
+
+            $request ->session()->flash('success','Category added successfully');
+
+            return response()->json([
+                'status' => true,
+                'massage' => 'Category added successfully'
+            ]);
+
+            
 
         }else{
             return response()->json([
