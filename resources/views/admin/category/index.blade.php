@@ -21,20 +21,27 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
+            @include('admin.validate')
             <div class="card">
-                <div class="card-header">
-                    <div class="card-tools">
-                        <div class="input-group input-group" style="width: 250px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-        
-                            <div class="input-group-append">
-                              <button type="submit" class="btn btn-default">
-                                <i class="fas fa-search"></i>
-                              </button>
-                            </div>
-                          </div>
+                <form action="" method="get">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <button type="button" onclick="window.location.href='{{ route('category.index')}}'" class="btn btn-default btn-sm">All Categories</button>
+                        </div>
+                        <div class="card-tools">
+                            <div class="input-group input-group" style="width: 250px;">
+                                <input type="text" name="keyword" value="{{ Request::get('keyword')}}" class="form-control float-right" placeholder="Search">
+            
+                                <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                  </button>
+                                </div>
+                              </div>
+                        </div>
                     </div>
-                </div>
+                </form>
+              
                 <div class="card-body table-responsive p-0">								
                     <table class="table table-hover text-nowrap">
                         <thead>
@@ -95,6 +102,7 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination m-0 float-right">
+                        {{ $categories-> links()}}
                       {{-- <li class="page-item"><a class="page-link" href="#">«</a></li>
                       <li class="page-item"><a class="page-link" href="#">1</a></li>
                       <li class="page-item"><a class="page-link" href="#">2</a></li>

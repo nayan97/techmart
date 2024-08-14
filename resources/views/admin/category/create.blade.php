@@ -54,7 +54,7 @@
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary">Create</button>
-                    <a href="brands.html" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{ route('category.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         
@@ -72,34 +72,48 @@
     $("#catForm").submit(function(event) {
         event.preventDefault(); 
         var element =  $(this);
-
+        $("button[type=submit]").prop('disabled', true);
         $.ajax({
             url:'{{ route("category.store")}}',
             type:'post',
             data: element.serializeArray(),
             dataType:'json',
             success: function(response){
-                var errors = response['errors'];
-                if (errors['name']){
-                    $("#name").addClass('is-invalid')
-                    .siblings('p')
-                    .addClass('invalid-feedback').html(errors['name']);
-                }else{
+                $("button[type=submit]").prop('disabled', false);
+                if (response["status"] == true){
+                    window.location.href="{{ route('category.index')}}";
                     $("#name").removeClass('is-invalid')
-                    .siblings('p')
-                    .removeClass('invalid-feedback').html("");
-                }
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
 
-                if (errors['slug']){
-                    $("#slug").addClass('is-invalid')
-                    .siblings('p')
-                    .addClass('invalid-feedback').html(errors['slug']);
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+
                 }else{
-                    $("#slug").removeClass('is-invalid')
-                    .siblings('p')
-                    .removeClass('invalid-feedback').html("");
+                        var errors = response['errors'];
+                    if (errors['name']){
+                        $("#name").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback').html(errors['name']);
+                    }else{
+                        $("#name").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+                    }
 
+                    if (errors['slug']){
+                        $("#slug").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback').html(errors['slug']);
+                    }else{
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+
+                  }
                 }
+   
 
             }, error: function(jqXHR, exception){
 
