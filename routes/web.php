@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'admin',], function(){
         // Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         
         Route::resource('category', CategoryController::class);
+        Route::resource('brand', BrandController::class);
         
 
 
