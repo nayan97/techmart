@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\category;
+use App\Models\TempImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+
 
 class CategoryController extends Controller
 {
@@ -49,6 +52,24 @@ class CategoryController extends Controller
             $category -> status = $request->status;
             $category -> save();
 
+            // Saveimage code
+
+            if (!empty($request->image_id)) {
+                $tempImg = TempImage::find($request->image_id);
+                $extArray = explode('.', $tempImg->name);
+                $ext = last($extArray);
+
+                $newImageName = $category->id.'.'.$ext; 
+                $sPath = public_path().'/img/temp/'.$tempImg->name;
+                $dPath = public_path().'/img/category/'.$newImageName;
+                File::copy($sPath,$dPath);
+
+                $category -> img = $newImageName;
+                $category -> save();
+
+
+
+            }
             $request ->session()->flash('success','Category added successfully');
 
             return response()->json([
