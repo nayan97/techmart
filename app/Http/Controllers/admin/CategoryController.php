@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
+use Image;
+
 
 class CategoryController extends Controller
 {
@@ -63,6 +65,13 @@ class CategoryController extends Controller
                 $sPath = public_path().'/img/temp/'.$tempImg->name;
                 $dPath = public_path().'/img/category/'.$newImageName;
                 File::copy($sPath,$dPath);
+
+                //generate thumbnail
+                $dPath = public_path().'/img/category/thumb/'.$newImageName;
+
+                $img = Image::make($sPath);
+                $img->resize(450, 600);
+                $img->save($dPath);
 
                 $category -> img = $newImageName;
                 $category -> save();
