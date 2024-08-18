@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 
@@ -34,7 +35,7 @@ Route::group(['prefix' => 'admin',], function(){
         Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         Route::get('/logout', [HomeController::class,'logout'])->name('admin.logout');
         // Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
-        
+        Route::post('/upload-temp-image', [TempImgController::class, 'create'])->name('temp-images.create');
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
         
