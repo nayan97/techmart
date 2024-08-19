@@ -49,6 +49,7 @@
                                 <th width="60">ID</th>
                                 <th>Name</th>
                                 <th>Slug</th>
+                                <th>Photo</th>
                                 <th width="100">Status</th>
                                 <th width="100">Action</th>
                             </tr>
@@ -60,6 +61,7 @@
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->slug}}</td>
+                                    <td>{{ url('img/category/thumb/'.$item->img)}}</td>
                                     <td>
                                         @if ($item->status == 1)
                                         <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">

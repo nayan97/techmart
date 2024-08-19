@@ -122,7 +122,7 @@
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
 
-                  }
+                     }
                 }
    
 

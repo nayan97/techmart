@@ -22,7 +22,7 @@
         <!-- Default box -->
         <div class="container-fluid">
 
-            <form action="" method="post" id="catForm" name="catForm">
+            <form action="" method="put" id="catForm" name="catForm">
                 <div class="card">
                     <div class="card-body">								
                         <div class="row">
@@ -36,6 +36,14 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                    <p></p>	
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
                                     <label for="status">Status</label>
                                     <select class="form-control" name="status" id="status">
                                         <option {{ ($category ->status == 1 ) ? 'selected' : '' }} value="1">On</option>
@@ -43,7 +51,7 @@
                                     </select>
                                 </div>
                             </div>	
-                   
+                
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <input type="hidden" id="image_id" name="image_id">
@@ -93,8 +101,8 @@
         var element =  $(this);
         $("button[type=submit]").prop('disabled', true);
         $.ajax({
-            url:'{{ route("category.store")}}',
-            type:'post',
+            url:'{{ route("category.update", $category ->id)}}',
+            type:'put',
             data: element.serializeArray(),
             dataType:'json',
             success: function(response){
@@ -102,6 +110,10 @@
                 if (response["status"] == true){
                     window.location.href="{{ route('category.index')}}";
                     $("#name").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+
+                        $("#slug").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
 
@@ -116,6 +128,16 @@
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                     }
+                    if (errors['slug']){
+                        $("#slug").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback').html(errors['slug']);
+                    }else{
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+
+                     }
                 }
    
 

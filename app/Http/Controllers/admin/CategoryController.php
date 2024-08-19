@@ -118,7 +118,78 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = category::find($id);
+
+        if (empty($category)){
+            return response()->json([
+                'status' => false,
+                'notFound' => true,
+                'message' => 'No category found',
+
+            ]);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'slug' => 'required|unique:categories,slug,'.$category->id.',id',
+        ]);
+
+        if ($validator->passes()){
+
+      
+            $category -> name = $request->name;
+            $category -> slug = Str::slug($request -> name);
+            $category -> status = $request->status;
+            $category -> save();
+
+            //unlink old Image
+
+            $oldImage = $category->img;
+
+            // Saveimage code
+
+            if (!empty($request->image_id)) {
+                $tempImg = TempImage::find($request->image_id);
+                $extArray = explode('.', $tempImg->name);
+                $ext = last($extArray);
+
+                $newImageName = $category->id.'-'.time().'.'.$ext; 
+                $sPath = public_path().'/img/temp/'.$tempImg->name;
+                $dPath = public_path().'/img/category/'.$newImageName;
+                File::copy($sPath,$dPath);
+
+                //generate thumbnail
+                $dPath = public_path().'/img/category/thumb/'.$newImageName;
+
+                $img = Image::make($sPath);
+                $img->resize(450, 600);
+                $img->save($dPath);
+
+                $category -> img = $newImageName;
+                $category -> save();
+
+                // delete old image
+                File::delete(public_path().'/img/category/thumb/'.$oldImage);
+                File::delete(public_path().'/img/category/'.$oldImage);
+
+
+
+            }
+            $request ->session()->flash('success','Category updated successfully');
+
+            return response()->json([
+                'status' => true,
+                'massage' => 'Category updated successfully'
+            ]);
+
+            
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     /**
