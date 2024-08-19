@@ -23,7 +23,7 @@ class CategoryController extends Controller
         if (!empty($request->get('keyword'))) {
             $categories = $categories->where('name', 'like', '%'.$request->get('keyword').'%');
         }
-        $categories =  $categories->paginate(4);
+        $categories =  $categories->paginate(10);
 
         return view('admin.category.index', compact('categories'));
     }
@@ -109,7 +109,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = category::find($id);
+         return view('admin.category.edit', compact('category'));
     }
 
     /**
