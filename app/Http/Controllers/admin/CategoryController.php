@@ -195,8 +195,29 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $category = category::find($id);
+
+        $oldImage = $category->img;
+
+        if (empty($category)){
+            return redirect ()->route('category.index');
+        }
+
+        File::delete(public_path().'/img/category/thumb/'.$oldImage);
+        File::delete(public_path().'/img/category/'.$oldImage);
+
+        $category->delete();
+
+        $request ->session()->flash('success','Category category successfully');
+
+        return response()->json([
+            'status' => true,
+            'massage' => 'Category deleted successfully'
+        ]);
+
+
+
     }
 }
