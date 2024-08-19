@@ -201,9 +201,9 @@ class CategoryController extends Controller
 
         $oldImage = $category->img;
 
-        if (empty($category)){
-            return redirect ()->route('category.index');
-        }
+        // if (empty($category)){
+        //     return redirect ()->route('category.index');
+        // }
 
         File::delete(public_path().'/img/category/thumb/'.$oldImage);
         File::delete(public_path().'/img/category/'.$oldImage);

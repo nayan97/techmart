@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\Admin\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'admin',], function(){
         Route::post('/upload-temp-image', [TempImgController::class, 'create'])->name('temp-images.create');
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
+        Route::resource('subcategory', SubCategoryController::class);
         
 
 
