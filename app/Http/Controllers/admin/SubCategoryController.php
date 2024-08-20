@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\category;
+use App\Models\SubCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SubCategoryController extends Controller
 {
@@ -19,8 +23,8 @@ class SubCategoryController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('admin.subcategory.create');
+    {   $cats = category::orderBy('name','ASC')->get();
+        return view('admin.subcategory.create', compact('cats'));
     }
 
     /**
@@ -28,7 +32,36 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name'      => 'required',
+            'slug'      => 'required|unique:categories',
+            'category'  => 'required',
+            'status'    => 'required'
+        ]);
+
+        if ($validator->passes()){
+
+            $subcategory = new SubCategory();
+            $subcategory -> name = $request->name;
+            $subcategory -> slug = Str::slug($request -> name);
+            $subcategory -> status = $request->status;
+            $subcategory -> category_id = $request->category;
+
+            $subcategory -> save();
+
+            $request ->session()->flash('success','Sub Category added successfully');
+
+            return response()->json([
+                'status' => true,
+                'massage' => 'Sub Category added successfully'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     /**
