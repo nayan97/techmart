@@ -15,8 +15,12 @@ class SubCategoryController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    {   
+        $subcategory = SubCategory::latest();
+
+        $subcategory = $subcategory->paginate(5);
+
+        return view('admin.subcategory.index', compact('subcategory'));
     }
 
     /**
