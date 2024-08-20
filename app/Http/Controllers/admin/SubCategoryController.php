@@ -14,9 +14,16 @@ class SubCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $subcategory = SubCategory::latest();
+        $subcategory = SubCategory::select('sub_categories.*', 'categories.name as categoryName')
+                                ->latest('sub_categories.id')
+                                ->leftJoin('categories', 'categories.id', 'sub_categories.category_id');
+
+        if (!empty($request->get('keyword'))) {
+            $subcategory = $subcategory->where('sub_categories.name', 'like', '%'.$request->get('keyword').'%');
+            $subcategory = $subcategory->orWhere('categories.name', 'like', '%'.$request->get('keyword').'%');
+        }
 
         $subcategory = $subcategory->paginate(5);
 
@@ -81,7 +88,8 @@ class SubCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        return view('admin.subcategory.edit', compact('subcategory'));
     }
 
     /**
