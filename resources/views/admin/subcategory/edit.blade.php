@@ -22,10 +22,31 @@
         <!-- Default box -->
         <div class="container-fluid">
 
-            <form action="" method="put" id="catForm" name="catForm">
+            <form action="" method="put" id="subCatForm" name="subCatForm">
                 <div class="card">
                     <div class="card-body">								
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                
+                                    <label for="name">Category</label>
+                                    <select name="category" id="category" class="form-control">
+                                    <option value="">Select a Category</option>
+                                        
+                                        @if (!empty($categories)){
+                                        @foreach ($categories as $item)
+                                            
+                                         <option {{ ($subcategory ->category_id == $item->id ) ? 'selected' : '' }} value="{{ $item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                        
+                                        }
+                                        @endif
+                                      
+                                    </select>
+                                    <p></p>
+                                 
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Name</label>
@@ -37,7 +58,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Slug</label>
-                                    <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                    <input value="{{ $subcategory->slug}}" type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
                                     <p></p>	
                                 </div>
                             </div>
@@ -51,13 +72,13 @@
                                     </select>
                                 </div>
                             </div>	
-                 									
+                    									
                         </div>
                     </div>							
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary">Update</button>
-                    <a href="{{ route('category.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{ route('subcategory.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         
@@ -72,19 +93,19 @@
 @section('customJs')
 
 <script>
-    $("#catForm").submit(function(event) {
+    $("#subCatForm").submit(function(event) {
         event.preventDefault(); 
         var element =  $(this);
         $("button[type=submit]").prop('disabled', true);
         $.ajax({
-            url:'{{ route("category.update", $subcategory ->id)}}',
+            url:'{{ route("subcategory.update", $subcategory ->id)}}',
             type:'put',
             data: element.serializeArray(),
             dataType:'json',
             success: function(response){
                 $("button[type=submit]").prop('disabled', false);
                 if (response["status"] == true){
-                    window.location.href="{{ route('category.index')}}";
+                    window.location.href="{{ route('subcategory.index')}}";
                     $("#name").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");

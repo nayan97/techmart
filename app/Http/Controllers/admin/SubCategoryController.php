@@ -86,10 +86,18 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $subcategory = SubCategory::find($id);
-        return view('admin.subcategory.edit', compact('subcategory'));
+        if (empty($subcategory)){
+            $request->session()->flash('error', 'record not found');
+            return redirect()->route('subcategory.index');
+        }
+        $categories = category::orderBy('name', 'ASC')->get();
+
+        $data['categories'] = $categories;
+        $data['subcategory'] = $subcategory;
+        return view('admin.subcategory.edit', $data);
     }
 
     /**
@@ -97,7 +105,45 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        if (empty($subcategory)){
+            $request->session()->flash('error', 'record not found');
+            return response([
+                'status' => false,
+                'notFound' => true
+            ]);
+            // return redirect()->route('subcategory.index');
+        }
+        
+        $validator = Validator::make($request->all(),[
+            'name'      => 'required',
+            'slug' => 'required|unique:sub_categories,slug,'.$subcategory->id.',id',
+            'category'  => 'required',
+            'status'    => 'required'
+        ]);
+
+        if ($validator->passes()){
+
+            $subcategory -> name = $request->name;
+            $subcategory -> slug = Str::slug($request -> name);
+            $subcategory -> status = $request->status;
+            $subcategory -> category_id = $request->category;
+
+            $subcategory -> save();
+
+            $request ->session()->flash('success','Sub Category updated successfully');
+
+            return response()->json([
+                'status' => true,
+                'massage' => 'Sub Category updated successfully'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     /**

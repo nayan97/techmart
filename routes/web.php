@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin',], function(){
         Route::get('/logout', [HomeController::class,'logout'])->name('admin.logout');
         // Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         Route::post('/upload-temp-image', [TempImgController::class, 'create'])->name('temp-images.create');
+        
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('subcategory', SubCategoryController::class);
