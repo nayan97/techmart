@@ -37,7 +37,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $brand = new Brand();
-        
+
         $validator = Validator::make($request -> all(),[
             'name' => 'required',
             'slug' => 'required|unique:brands',
@@ -134,8 +134,27 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $brand = Brand::find($id);
+
+      
+
+        if (empty($brand)){
+            $request->session->flash('error', 'resource not found');
+            return redirect ()->route('brand.index');
+        }
+
+ 
+
+        $brand->delete();
+
+        $request ->session()->flash('success','brand successfully');
+
+        return response()->json([
+            'status' => true,
+            'massage' => 'Category deleted successfully'
+        ]);
+
     }
 }
