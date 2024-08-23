@@ -13,9 +13,14 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.brand.index');
+        $brand = Brand::latest();
+        if (!empty($request->get('keyword'))) {
+            $brand = $brand->where('name', 'like', '%'.$request->get('keyword').'%');
+        }
+        $brand =  $brand->paginate(10);
+        return view('admin.brand.index', compact('brand'));
     }
 
     /**
@@ -31,6 +36,8 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $brand = new Brand();
+        
         $validator = Validator::make($request -> all(),[
             'name' => 'required',
             'slug' => 'required|unique:brands',
@@ -39,8 +46,6 @@ class BrandController extends Controller
 
         if ($validator->passes()) {
 
-            $brand = new Brand();
-
             $brand-> name = $request->name;
             $brand -> slug = Str::slug($request->name);
             $brand -> status = $request->status;
@@ -48,7 +53,7 @@ class BrandController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'brand Added successfully'
+                'message' => 'brand updated successfully'
         ]);
         
         }else {
@@ -70,9 +75,16 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        $brand = Brand::find($id);
+
+        if (empty($brand)) {
+            $request->session->flash('error', 'resource not found');
+            return redirect()->route('brand.index');
+
+        }
+        return view('admin.brand.edit', compact('brand'));
     }
 
     /**
@@ -80,7 +92,43 @@ class BrandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $brand = Brand::find($id);
+
+        if (empty($brand)) {
+            $request->session->flash('error', 'resource not found');
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+
+        }
+        $validator = Validator::make($request -> all(),[
+            'name' => 'required',
+            'slug' => 'required|unique:brands,slug,'.$brand->id.',id',
+
+
+        ]);
+
+        if ($validator->passes()) {
+
+         
+
+            $brand-> name = $request->name;
+            $brand -> slug = Str::slug($request->name);
+            $brand -> status = $request->status;
+            $brand -> save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'brand Added successfully'
+        ]);
+        
+        }else {
+        return response()->json([
+            'status' => false,
+            'errors' => $validator->errors()
+        ]);
+        }
     }
 
     /**
