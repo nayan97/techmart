@@ -22,7 +22,7 @@
         <!-- Default box -->
         <div class="container-fluid">
 
-            <form action="" method="post" id="subCatForm" name="sunCatForm">
+            <form action="" method="post" id="subCatForm" name="subCatForm">
                 <div class="card">
                     <div class="card-body">								
                         <div class="row">

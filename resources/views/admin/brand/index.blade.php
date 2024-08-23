@@ -10,7 +10,7 @@
                     <h1>Brands</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="create-brand.html" class="btn btn-primary">New Brand</a>
+                    <a href="{{route('brand.create')}}" class="btn btn-primary">New Brand</a>
                 </div>
             </div>
         </div>
