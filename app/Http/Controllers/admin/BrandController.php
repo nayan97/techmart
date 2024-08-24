@@ -111,9 +111,7 @@ class BrandController extends Controller
 
         if ($validator->passes()) {
 
-         
-
-            $brand-> name = $request->name;
+           $brand-> name = $request->name;
             $brand -> slug = Str::slug($request->name);
             $brand -> status = $request->status;
             $brand -> save();
@@ -134,18 +132,15 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Request $request, string $id)
     {
         $brand = Brand::find($id);
-
-      
 
         if (empty($brand)){
             $request->session->flash('error', 'resource not found');
             return redirect ()->route('brand.index');
         }
-
- 
 
         $brand->delete();
 
@@ -153,7 +148,7 @@ class BrandController extends Controller
 
         return response()->json([
             'status' => true,
-            'massage' => 'Category deleted successfully'
+            'massage' => 'Brand deleted successfully'
         ]);
 
     }
