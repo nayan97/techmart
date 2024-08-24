@@ -9,6 +9,8 @@
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/plugins/fontawesome-free/css/all.min.css')}}">
 		<link rel="stylesheet" href="{{ asset('assets/admin/plugins/dropzone/min/dropzone.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css')}}">
+
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{ asset('assets/admin/css/adminlte.min.css')}}">
 		<link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css')}}">
@@ -78,6 +80,7 @@
 		<!-- jQuery -->
 		<script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js')}}"></script>
 		<script src="{{ asset('assets/admin/plugins/dropzone/min/dropzone.min.js')}}"></script>
+		<script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js')}}"></script>
 
 		<!-- Bootstrap 4 -->
 		<script src="{{ asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -90,6 +93,13 @@
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
+			});
+			
+			$(document).ready(function(){
+				$(".summernote").summernote({
+					height: '220px'
+				});
+
 			});
 		</script>
 

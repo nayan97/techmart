@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
@@ -41,6 +42,11 @@ Route::group(['prefix' => 'admin',], function(){
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('subcategory', SubCategoryController::class);
+
+        // products routes
+        Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+        Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+        Route::post('/product/create', [ProductController::class, 'store'])->name('product.store');
         
 
 
