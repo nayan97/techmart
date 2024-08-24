@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\Admin\BrandController;
@@ -47,6 +50,21 @@ Route::group(['prefix' => 'admin',], function(){
         Route::get('/product', [ProductController::class, 'index'])->name('product.index');
         Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
         Route::post('/product/create', [ProductController::class, 'store'])->name('product.store');
+
+
+        // slug creator 
+
+        Route::get('/getSlug', function (Request $request){
+            $slug = '';
+            if (!empty($request->title)) {
+                $slug = Str::slug($request->title);
+            }
+            return response()->json([
+                'status' => true,
+                'slug' => $slug
+            ]);
+
+        })->name('getSlug');
         
 
 

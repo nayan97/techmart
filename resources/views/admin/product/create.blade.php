@@ -28,13 +28,13 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="title">Title</label>
-                                        <input type="text" name="title" id="title" class="form-control" placeholder="Slug">	
+                                        <input type="text" name="title" id="title" class="form-control" placeholder="Title">	
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="slug">Slug</label>
-                                        <input type="text" name="slug" id="slug" class="form-control" placeholder="Title">	
+                                        <input readonly type="text" name="slug" id="slug" class="form-control" placeholder="Slug">	
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -182,5 +182,27 @@
 @endsection
 
 @section('customJs')
+<script>
+
+    $("#title").change(function(){
+        element = $(this);
+        $("button[type=submit]").prop('disabled', true);
+        $.ajax({
+            url:'{{ route("getSlug")}}',
+            type:'get',
+            data: {title: element.val()},
+            dataType:'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+
+                if (response["status"] == true) {
+                    $("#slug").val(response["slug"]);
+                }
+            }
+
+        });  
+    });
+      
+</script>
     
 @endsection
