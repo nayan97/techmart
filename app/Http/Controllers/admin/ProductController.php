@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -12,8 +14,13 @@ class ProductController extends Controller
     }
 
     public function create(){
+        $data = [];
+        $categories = category::orderBy('name', 'ASC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        $data['categories'] = $categories;
+        $data['brands'] = $brands;
 
-        return view('admin.product.create');
+        return view('admin.product.create', $data);
 
     }
 
