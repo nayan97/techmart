@@ -46,16 +46,9 @@ Route::group(['prefix' => 'admin',], function(){
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('subcategory', SubCategoryController::class);
-
-        // products routes
-        Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-        Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
-        Route::post('/product/create', [ProductController::class, 'store'])->name('product.store');
-
+        // products route
+        Route::resource('products', ProductController::class);
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
-
-
-
 
         // slug creator 
 

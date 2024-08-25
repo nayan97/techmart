@@ -111,7 +111,6 @@
                                         </div>
                                         <div class="mb-3">
                                             <input type="number" min="0" name="qty" id="qty" class="form-control" placeholder="Qty">	
-                                            <p class="error"></p>
                                         </div>
                                     </div>                                         
                                 </div>
@@ -160,7 +159,7 @@
                             <div class="card-body">	
                                 <h2 class="h4 mb-3">Product brand</h2>
                                 <div class="mb-3">
-                                    <select name="brand" id="brand" class="form-control">
+                                    <select name="status" id="status" class="form-control">
                                         
                                         <option value="">Select Brand</option>
                                         @if ($brands->isNotEmpty())
@@ -171,7 +170,6 @@
                                         @endif
                                 
                                     </select>
-                                    <p class="error"></p>
                                 </div>
                             </div>
                         </div> 
@@ -183,7 +181,6 @@
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>                                                
                                     </select>
-                                    <p class="error"></p>
                                 </div>
                             </div>
                         </div>                                 
@@ -224,42 +221,66 @@
         });  
     });
 
-    $("#proForm").submit(function(event) {
-    event.preventDefault(); 
-    var formArray = $(this).serializeArray();
-    $("button[type=submit]").prop('disabled', true);
-    $.ajax({
-        url:'{{ route("products.store")}}',
-        type:'post',
-        data: formArray,
-        dataType:'json',
-        success: function(response){
-            $("button[type=submit]").prop('disabled', false);
-            if (response["status"] == true){
-                window.location.href="{{ route('products.create')}}";
-         
+    $("#productForm").submit(function(event){
+        event.preventDefault();
+        var formArray = $(this).serializeArray();
+        $.ajax({
+            url: '{{ route("products.store")}}',
+            type: 'post',
+            data: formArray,
+            dataType: 'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+                if (response["status"] == true){
+                    window.location.href="{{ route('category.index')}}";
+                    $("#name").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback')
+                        .html("");
 
-            }else{
-                    var errors = response['errors'];
-   
-                $(".error").removeClass('invalid-feedback').html('');
-                $("input[type='text'], input[type='number'], select").removeClass('is-invalid');
-                $.each(errors, function(key, value){
-                    $(`#${key}`)
-                    .addClass('is-invalid')
-                    .siblings('p')
-                    .addClass('invalid-feedback').html(value);
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback')
+                        .html("");
 
-                })
+                }else{
+                        var errors = response['errors'];
+                    if (errors['name']){
+                        $("#title").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback')
+                        .html(errors['name']);
+
+                    }else{
+                        $("#title").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback')
+                        .html("");
+                    }
+
+                    if (errors['slug']){
+                        $("#slug").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback')
+                        .html(errors['slug']);
+                    }else{
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback')
+                        .html("");
+
+                     }
+                }
+
+            },
+            error: function(){
+                .console.log("something went wrong");
+                
             }
 
+        });
+    });
 
-        }, error: function(jqXHR, exception){
-
-        }
-
-      });
-   });
     
 
     $("#category").change(function(){
@@ -273,7 +294,7 @@
             success: function(response){
                 $("#sub_category").find("option").not(":first").remove();
                 $.each(response["subCategories"], function(key,item){
-                    $("#sub_category").append(`<option value='${item.id}'>${item.name}</option>`)
+                    $("#sub_category").append(`<option '${item.id}'>${item.name}</option>`)
                 });    
             },
             error: function(){
@@ -285,5 +306,6 @@
     });
       
 </script>
+
     
 @endsection
