@@ -19,7 +19,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::latest('id')->paginate();
+        $data['products'] = $products;
+        return view('admin.product.index', $data);
     }
 
     /**
@@ -103,7 +105,7 @@ class ProductController extends Controller
                        // Large Image
                    
                     $sourcePath = public_path().'/img/temp/'.$tempImgInfo->name;
-                    $dPath = public_path().'/img/product/large/'.$tempImgInfo->name;
+                    $dPath = public_path().'/img/product/large/'.$imageName;
                     $image = Image::make($sourcePath);
                     $image->resize(1400, null, function ($constraint){
                         $constraint->aspectratio();
@@ -112,7 +114,7 @@ class ProductController extends Controller
 
                     // Small Image
                    
-                    $dPath = public_path().'/img/product/small/'.$tempImgInfo->name;
+                    $dPath = public_path().'/img/product/small/'.$imageName;
                     $image = Image::make($sourcePath);
                     $image->fit(300, 300);
                     $image->save($dPath);
