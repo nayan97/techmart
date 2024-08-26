@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use Image;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\category;
+use App\Models\TempImage;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -38,6 +41,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->image_array);
+        // exit();
         $rules = [
             'title' => 'required',
             'slug' => 'required|unique:products',
@@ -72,6 +77,48 @@ class ProductController extends Controller
             $product->status = $request->status;
             $product->is_featured = $request->is_featured;
             $product->save();
+
+            // save product image gallery
+
+            if (!empty($request->image_array)){
+                foreach ($request->image_array as $temp_image_id){
+
+                    $tempImgInfo = TempImage::find($temp_image_id);
+                    $extArray = explode('.', $tempImgInfo->name);
+                    $ext = last($extArray);
+
+                    $productImage = new ProductImage();
+                    $productImage->product_id = $product->id;
+                    $productImage->image = 'NULL';
+                    $productImage->save();
+
+                    $imageName = $product->id.'-'.$productImage->id.'-'.time().'.'.$ext;
+
+                    $productImage->image = $imageName;
+                    $productImage->save();
+
+
+                       //generate thumbnail
+                       
+                       // Large Image
+                   
+                    $sourcePath = public_path().'/img/temp/'.$tempImgInfo->name;
+                    $dPath = public_path().'/img/product/large/'.$tempImgInfo->name;
+                    $image = Image::make($sourcePath);
+                    $image->resize(1400, null, function ($constraint){
+                        $constraint->aspectratio();
+                    });
+                    $image->save($dPath);
+
+                    // Small Image
+                   
+                    $dPath = public_path().'/img/product/small/'.$tempImgInfo->name;
+                    $image = Image::make($sourcePath);
+                    $image->fit(300, 300);
+                    $image->save($dPath);
+
+                }
+            }
 
             $request->session()->flash('success', 'Product Uploaded successfully');
 
