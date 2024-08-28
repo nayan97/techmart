@@ -17,9 +17,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest('id')->paginate();
+        $products = Product::latest('id')->with('product_images');
+        if ($request->get('keyword') != "") {
+            $products = $products->where('title', 'like', '%' . $request->keyword.'%');
+        }
+        $products = $products->paginate();
+        // dd($products);
         $data['products'] = $products;
         return view('admin.product.index', $data);
     }
