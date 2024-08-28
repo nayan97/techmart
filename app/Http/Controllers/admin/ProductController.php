@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\category;
 use App\Models\TempImage;
+use App\Models\SubCategory;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -156,7 +157,19 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+
+        $data = [];
+        $categories = category::orderBy('name', 'ASC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
+        $data['categories'] = $categories;
+        $data['subCategories'] = $subCategories;
+        $data['brands'] = $brands;
+        $data['product'] = $product;
+        return view('admin.product.edit', $data);
+
     }
 
     /**
