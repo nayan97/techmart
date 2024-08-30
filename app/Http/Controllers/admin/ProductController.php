@@ -154,16 +154,21 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $product = Product::find($id);
+        if (empty($product)) {
+            return redirect()->route('products.index')->with('error', 'Product not found');
+        }
 
         $subCategories = SubCategory::where('category_id', $product->category_id)->get();
+        $productImages = ProductImage::where('product_id', $product->id)->get();
 
         $data = [];
         $categories = category::orderBy('name', 'ASC')->get();
         $brands = Brand::orderBy('name', 'ASC')->get();
         $data['categories'] = $categories;
+        $data['productImages'] = $productImages;
         $data['subCategories'] = $subCategories;
         $data['brands'] = $brands;
         $data['product'] = $product;
