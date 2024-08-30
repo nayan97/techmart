@@ -20,7 +20,7 @@
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->
-        <form action="" method="post" id="proForm" name="proForm">
+        <form action="" method="put" id="proForm" name="proForm">
     
             <div class="container-fluid">
                 <div class="row">
@@ -201,7 +201,7 @@
                 </div>
                 
                 <div class="pb-5 pt-3">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('products.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </div>
@@ -214,6 +214,92 @@
 
 @endsection
 @section('customJs')
+
+<script>
+
+    $("#title").change(function(){
+        element = $(this);
+        $("button[type=submit]").prop('disabled', true);
+        $.ajax({
+            url:'{{ route("getSlug")}}',
+            type:'get',
+            data: {title: element.val()},
+            dataType:'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+
+                if (response["status"] == true) {
+                    $("#slug").val(response["slug"]);
+                }
+            }
+
+        });  
+    });
+
+    $("#proForm").submit(function(event) {
+    event.preventDefault(); 
+    var formArray = $(this).serializeArray();
+    $("button[type=submit]").prop('disabled', true);
+    $.ajax({
+        url:'{{ route("products.update",$product->id)}}',
+        type:'put',
+        data: formArray,
+        dataType:'json',
+        success: function(response){
+            $("button[type=submit]").prop('disabled', false);
+            if (response["status"] == true){
+                $(".error").removeClass('invalid-feedback').html('');
+                $("input[type='text'], input[type='number'], select").removeClass('is-invalid');
+                window.location.href="{{ route('products.index')}}";
+         
+
+            }else{
+                    var errors = response['errors'];
+   
+                $(".error").removeClass('invalid-feedback').html('');
+                $("input[type='text'], input[type='number'], select").removeClass('is-invalid');
+                $.each(errors, function(key, value){
+                    $(`#${key}`)
+                    .addClass('is-invalid')
+                    .siblings('p')
+                    .addClass('invalid-feedback').html(value);
+
+                })
+            }
+
+
+        }, error: function(jqXHR, exception){
+
+        }
+
+      });
+   });
+    
+
+    $("#category").change(function(){
+        var category_id = $(this).val();
+
+        $.ajax({
+            url: '{{ route("product-subcategories.index") }}',
+            type: 'get',
+            data: {category_id:category_id},
+            dataType: 'json',
+            success: function(response){
+                $("#sub_category").find("option").not(":first").remove();
+                $.each(response["subCategories"], function(key,item){
+                    $("#sub_category").append(`<option value='${item.id}'>${item.name}</option>`)
+                });    
+            },
+            error: function(){
+                console.log("something went wrong");
+                
+            }
+
+        });
+    });
+
+      
+</script>
 
     
 @endsection
