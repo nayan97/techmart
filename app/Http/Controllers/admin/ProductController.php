@@ -11,6 +11,7 @@ use App\Models\SubCategory;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -238,8 +239,35 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        if (empty($product)) {
+            $request->session()->flash('error', 'Product not found');
+            return response()->json([
+                'status' => false,
+                'notFound' => true,
+            ]);
+        }
+        $productImages = ProductImage::where('product_id', $id)->get();
+
+        if (!empty($productImages)) {
+            foreach ($productImages as $productImage) {
+                File::delete(public_path('/img/product/large/'.$productImage->image));
+                File::delete(public_path('/img/product/small/'.$productImage->image));
+            }
+            ProductImage::where('product_id', $id)->delete();
+        }
+        
+        $product->delete();
+        
+        $request->session()->flash('success', 'Product Deleted successfully');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product Deleted successfully',
+        ]);
+
+      
     }
 }
