@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 
 /*
@@ -49,6 +50,8 @@ Route::group(['prefix' => 'admin',], function(){
         // products route
         Route::resource('products', ProductController::class);
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
+        Route::post('/product-image/update', [ProductImageController::class, 'update'])->name('product-images.update');
+
 
         // slug creator 
 
