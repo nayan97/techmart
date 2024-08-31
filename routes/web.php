@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin',], function(){
         Route::resource('products', ProductController::class);
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
         Route::post('/product-image/update', [ProductImageController::class, 'update'])->name('product-images.update');
+        Route::delete('/product-image', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
 
 
         // slug creator 

@@ -6,6 +6,7 @@ use Image;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class ProductImageController extends Controller
 {
@@ -46,5 +47,23 @@ class ProductImageController extends Controller
             'ImagePath' => asset('img/product/small/'.$productImage->image),
             'message' => 'Image saved successfully'
         ]);
-}
+    }
+
+    public function destroy(Request $request){
+
+        $productImage = ProductImage::find($request->id);
+
+        // delete images
+
+        File::delete(public_path('/img/product/large/'.$productImage->image));
+        File::delete(public_path('/img/product/small/'.$productImage->image));
+
+        $productImage->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Image deleted successfully'
+        ]);
+    }
+
 }

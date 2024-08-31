@@ -69,7 +69,7 @@
                                  <input type="hidden" name="image_array[]" value="{{$image->id}}">
                                  <img src="{{ asset('img/product/small/'.$image->image)}}" class="card-img-top" alt="">
                                     <div class="card-body">
-                                        <a href="javascript::void(0)" onclick="deleteImage({{$image->id}})" class="btn btn-danger">Delete</a>
+                                        <a href="javascript:void(0)" onclick="deleteImage({{$image->id}})" class="btn btn-danger">Delete</a>
                                     </div>
                                 </div>
                               </div>
@@ -348,6 +348,23 @@
 
   function deleteImage(id){
     $("#image-row-"+id).remove();
+   if (confirm("Are you sure you want to delete")){
+    $.ajax({
+        url: '{{ route("product-images.destroy") }}',
+        type: 'delete',
+        data: {id:id},
+        success: function(response){
+            if (response.status == true) {
+                alert(response.message);
+        }else {
+            alert(response.message);
+        }
+    }
+
+    });
+   }
+ 
+
   }
 
       
