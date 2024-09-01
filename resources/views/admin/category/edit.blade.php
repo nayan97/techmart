@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Slug</label>
-                                    <input readonly type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                    <input readonly value="{{ $category->slug}}" type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
                                     <p></p>	
                                 </div>
                             </div>
