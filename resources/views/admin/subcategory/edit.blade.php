@@ -11,7 +11,7 @@
                     <h1>Edit Category</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('category.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('subcategory.index')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -69,6 +69,15 @@
                                     <select class="form-control" name="status" id="status">
                                         <option {{ ($subcategory ->status == 1 ) ? 'selected' : '' }} value="1">On</option>
                                         <option {{ ($subcategory ->status == 0 ) ? 'selected' : '' }} value="0">Off</option>
+                                    </select>
+                                </div>
+                            </div>	
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="showcat">Show Home Page</label>
+                                    <select class="form-control" name="showcat" id="showcat">
+                                        <option {{ ($subcategory ->showcat == 'Yes' ) ? 'selected' : '' }} value="Yes">Yes</option>
+                                        <option {{ ($subcategory ->showcat== 'No' ) ? 'selected' : '' }} value="No">No</option>
                                     </select>
                                 </div>
                             </div>	
@@ -143,6 +152,26 @@
             }
 
         });
+    });
+
+              // code for slug
+              $("#name").change(function(){
+        element = $(this);
+        $("button[type=submit]").prop('disabled', true);
+        $.ajax({
+            url:'{{ route("getSlug")}}',
+            type:'get',
+            data: {title: element.val()},
+            dataType:'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+
+                if (response["status"] == true) {
+                    $("#slug").val(response["slug"]);
+                }
+            }
+
+        });  
     });
 
   

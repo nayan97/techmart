@@ -56,6 +56,7 @@ class SubCategoryController extends Controller
             $subcategory -> name = $request->name;
             $subcategory -> slug = Str::slug($request -> name);
             $subcategory -> status = $request->status;
+            $subcategory -> showcat = $request->showcat;
             $subcategory -> category_id = $request->category;
 
             $subcategory -> save();
@@ -127,6 +128,7 @@ class SubCategoryController extends Controller
             $subcategory -> name = $request->name;
             $subcategory -> slug = Str::slug($request -> name);
             $subcategory -> status = $request->status;
+            $subcategory -> showcat = $request->showcat;
             $subcategory -> category_id = $request->category;
 
             $subcategory -> save();

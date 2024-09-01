@@ -55,8 +55,8 @@
                                 <div class="mb-3">
                                     <label for="showcat">Show on Page </label>
                                     <select class="form-control" name="showcat" id="showcat">
-                                        <option {{ ($category ->showcat == 1 ) ? 'selected' : '' }} value="1">Yes</option>
-                                        <option {{ ($category ->showcat == 0 ) ? 'selected' : '' }} value="0">No</option>
+                                        <option {{ ($category ->showcat == 'Yes' ) ? 'selected' : '' }} value="Yes">Yes</option>
+                                        <option {{ ($category ->showcat == 'No') ? 'selected' : '' }} value="No">No</option>
                                     </select>
                                 </div>
                             </div>	
