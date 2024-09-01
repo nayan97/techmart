@@ -52,6 +52,7 @@ class CategoryController extends Controller
             $category -> name = $request->name;
             $category -> slug = Str::slug($request -> name);
             $category -> status = $request->status;
+            $category -> showcat = $request->showcat;
             $category -> save();
 
             // Saveimage code
@@ -140,6 +141,7 @@ class CategoryController extends Controller
             $category -> name = $request->name;
             $category -> slug = Str::slug($request -> name);
             $category -> status = $request->status;
+            $category -> showcat = $request->showcat;
             $category -> save();
 
             //unlink old Image

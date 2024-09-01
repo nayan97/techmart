@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Slug</label>
-                                    <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                    <input readonly type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
                                     <p></p>	
                                 </div>
                             </div>
@@ -48,6 +48,15 @@
                                     <select class="form-control" name="status" id="status">
                                         <option {{ ($category ->status == 1 ) ? 'selected' : '' }} value="1">On</option>
                                         <option {{ ($category ->status == 0 ) ? 'selected' : '' }} value="0">Off</option>
+                                    </select>
+                                </div>
+                            </div>	
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="showcat">Show on Page </label>
+                                    <select class="form-control" name="showcat" id="showcat">
+                                        <option {{ ($category ->showcat == 1 ) ? 'selected' : '' }} value="1">Yes</option>
+                                        <option {{ ($category ->showcat == 0 ) ? 'selected' : '' }} value="0">No</option>
                                     </select>
                                 </div>
                             </div>	
@@ -170,6 +179,26 @@
         //console.log(response)
     }
   });
+
+          // code for slug
+          $("#name").change(function(){
+        element = $(this);
+        $("button[type=submit]").prop('disabled', true);
+        $.ajax({
+            url:'{{ route("getSlug")}}',
+            type:'get',
+            data: {title: element.val()},
+            dataType:'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+
+                if (response["status"] == true) {
+                    $("#slug").val(response["slug"]);
+                }
+            }
+
+        });  
+    });
 </script>
     
 @endsection
