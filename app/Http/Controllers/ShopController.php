@@ -11,9 +11,9 @@ class ShopController extends Controller
 {
     public function index(){
 
-        $categories = category::orderBy('name', 'ASC')->with('sub_category')->where('status' == 1)->get();
-        $brands = Brand::orderBy('name', 'ASC')->where('status' == 1)->get();
-        $products = Product::orderBy('id', 'DESC')->where('status' == 1)->get();
+        $categories = category::orderBy('name', 'ASC')->with('sub_category')->where('status', 1)->get();
+        $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
+        $products = Product::orderBy('id', 'DESC')->where('status', 1)->get();
 
         $data['products'] = $products;
         $data['brands'] = $brands;
