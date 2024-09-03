@@ -32,7 +32,7 @@ use App\Http\Controllers\admin\ProductSubCategoryController;
 // });
 
 Route::get('/',[FrontController::class, 'index'])->name('front.index');
-Route::get('/shop',[ShopController::class, 'index'])->name('shop.index');
+Route::get('/shop/{categortSlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('shop.index');
 
 
 
