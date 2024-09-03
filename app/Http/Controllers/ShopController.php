@@ -43,7 +43,19 @@ class ShopController extends Controller
             }
         }
 
-        $products =  $products->orderBy('id', 'DESC');
+       
+        if ($request->get('sort') != ''){
+            if ($request->get('sort') == 'latest'){
+                $products =  $products->orderBy('id', 'DESC');
+            }else if($request->get('sort') == 'price_asc'){
+                $products =  $products->orderBy('price', 'ASC');
+            }else if($request->get('sort') == 'price_desc'){
+                $products =  $products->orderBy('price', 'DESC');
+            }
+        } else{
+            $products =  $products->orderBy('id', 'DESC');
+        }
+
         $products =  $products->get();
 
         $data['products'] = $products;
@@ -54,6 +66,7 @@ class ShopController extends Controller
         $data['brandsArray'] = $brandsArray;
         $data['priceMax'] = (intval($request->get('price_max')) == 0) ? 1000 : $request->get('price_max');
         $data['priceMin'] = intval($request->get('price_min'));
+        $data['sort'] = $request->get('sort');
 
         return view('front.shop', $data);
     }
