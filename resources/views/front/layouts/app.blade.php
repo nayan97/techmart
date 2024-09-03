@@ -34,6 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/home/css/slick.css')}}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/home/css/slick-theme.css')}}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/home/css/video-js.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/home/css/ion.rangeSlider.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/home/css/style.css')}}" />
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -60,6 +61,7 @@
 <script src="{{ asset('assets/home/js/instantpages.5.1.0.min.js')}}"></script>
 <script src="{{ asset('assets/home/js/lazyload.17.6.0.min.js')}}"></script>
 <script src="{{ asset('assets/home/js/slick.min.js')}}"></script>
+<script src="{{ asset('assets/home/js/ion.rangeSlider.min.js')}}"></script>
 <script src="{{ asset('assets/home/js/custom.js')}}"></script>
 
 <script>
