@@ -142,7 +142,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img">
+                            <a href="{{ route('product.index', $product->slug)}}" class="product-img">
                                 @if (!empty($productImage->image))
                                 <img src="{{ asset('img/product/small/'.$productImage->image)}}" class="card-img-top" alt="">
                                 @else
@@ -192,7 +192,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img">
+                            <a href="{{ route('product.index', $product->slug)}}" class="product-img">
                                 @if (!empty($productImage->image))
                                 <img src="{{ asset('img/product/small/'.$productImage->image)}}" class="card-img-top" alt="">
                                 @else
