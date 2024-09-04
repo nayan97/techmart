@@ -166,7 +166,7 @@
                                         </li>
                                     </ul>
                                 </nav> --}}
-                                {{ $products->links()}}
+                                {{ $products->withQueryString()->links()}}
                             </div>
                         </div>
                     </div>
