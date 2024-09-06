@@ -84,6 +84,8 @@ class ProductController extends Controller
             $product->brand_id = $request->brand;
             $product->status = $request->status;
             $product->is_featured = $request->is_featured;
+            $product->short_description = $request->short_description;
+            $product->shipping_returns = $request->shipping_returns;
             $product->save();
 
             // save product image gallery
@@ -216,9 +218,9 @@ class ProductController extends Controller
             $product->brand_id = $request->brand;
             $product->status = $request->status;
             $product->is_featured = $request->is_featured;
+            $product->short_description = $request->short_description;
+            $product->shipping_returns = $request->shipping_returns;
             $product->save();
-
-
 
             $request->session()->flash('success', 'Product Updated successfully');
 

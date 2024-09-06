@@ -85,7 +85,7 @@
                                 </p>
                             </div>
                             <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
-                            <p>{!! $product->description!!}</p>
+                            <p>{!! $product->shipping_returns!!}</p>
                             </div>
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             
