@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\admin\HomeController;
@@ -34,7 +35,7 @@ use App\Http\Controllers\admin\ProductSubCategoryController;
 Route::get('/',[FrontController::class, 'index'])->name('front.index');
 Route::get('/shop/{categortSlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('shop.index');
 Route::get('/product/{slug}',[ShopController::class, 'product'])->name('product.index');
-
+Route::get('/cart',[CartController::class, 'cart'])->name('front.cart');
 
 
 Route::group(['prefix' => 'admin',], function(){
