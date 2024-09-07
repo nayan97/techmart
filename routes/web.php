@@ -35,7 +35,9 @@ use App\Http\Controllers\admin\ProductSubCategoryController;
 Route::get('/',[FrontController::class, 'index'])->name('front.index');
 Route::get('/shop/{categortSlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('shop.index');
 Route::get('/product/{slug}',[ShopController::class, 'product'])->name('product.index');
+
 Route::get('/cart',[CartController::class, 'cart'])->name('front.cart');
+Route::post('/add-to-cart',[CartController::class, 'addToCart'])->name('front.addToCart');
 
 
 Route::group(['prefix' => 'admin',], function(){
