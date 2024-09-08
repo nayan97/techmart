@@ -57,8 +57,10 @@ class CartController extends Controller
     }
 
     public function cart(){
-        dd(Cart::content());
-        // return view('front.cart');
+      
+        $cartContent = Cart::Content();
+        $data['cartContent'] = $cartContent;
+        return view('front.cart', $data);
     }
 
 }

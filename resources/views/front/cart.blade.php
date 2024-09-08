@@ -29,14 +29,23 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if (!empty($cartContent))
+                            @foreach ($cartContent as $item )
+                                
+                           
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <img src="images/product-1.jpg" width="" height="">
-                                        <h2>Product Name Goes Here</h2>
+                                      
+                                        @if (!empty($item->options->productImage->image))
+                                        <img src="{{ asset('img/product/small/'.$item->options->productImage->image)}}" alt="">
+                                        @else
+                                             <img src="{{ asset('assets/admin/img/default-150x150.png')}}" class="card-img-top">
+                                        @endif
+                                        <h2>{{ $item->name}}</h2>
                                     </div>
                                 </td>
-                                <td>$100</td>
+                                <td>${{$item->price}}</td>
                                 <td>
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
@@ -53,105 +62,15 @@
                                     </div>
                                 </td>
                                 <td>
-                                    $100
+                                    ${{ $item->price*$item->qty}}
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="images/product-1.jpg" width="" height="">
-                                        <h2>Product Name Goes Here</h2>
-                                    </div>
-                                </td>
-                                <td>$100</td>
-                                <td>
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1">
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm  border-0 text-center" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    $100
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="images/product-1.jpg" width="" height="">
-                                        <h2>Product Name Goes Here</h2>
-                                    </div>
-                                </td>
-                                <td>$100</td>
-                                <td>
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1">
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm  border-0 text-center" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    $100
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="images/product-1.jpg" width="" height="">
-                                        <h2>Product Name Goes Here</h2>
-                                    </div>
-                                </td>
-                                <td>$100</td>
-                                <td>
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1">
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm  border-0 text-center" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    $100
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                                </td>
-                            </tr>                                
+                            </tr>  
+                            @endforeach
+                            @endif
+                                                     
                         </tbody>
                     </table>
                 </div>
