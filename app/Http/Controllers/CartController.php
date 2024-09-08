@@ -19,11 +19,40 @@ class CartController extends Controller
         }
 
         if (Cart::count() >0){
-            echo "Product already exists";
+            // echo "Product already exists";
+            // product found in cart
+
+            $cartContent = Cart::content();
+            $productAlreadyExists = false;
+
+            foreach ($cartContent as $item){
+            if ($item->id == $product->id){
+                $productAlreadyExists = true;
+    
+                }
+            }
+            
+            if ($productAlreadyExists == false) {
+                Cart::add($product->id, $product->title, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product ->product_images->first() : '']);
+
+                $status = true;
+                $message = $product->title.' added in cart';
+
+            }else {
+                $status = false;
+                $message = $product->title.' already added in cart';
+            }
         } else {
-            echo "please addd a product to your cart";
+          
            Cart::add($product->id, $product->title, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product ->product_images->first() : '']);
+
+              $status = true;
+                $message = $product->title.' added in cart';
         }
+            return response()->json([
+                'status' => $status,
+                'message' =>$message
+            ]);
 
     }
 
