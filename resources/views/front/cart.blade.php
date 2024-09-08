@@ -35,7 +35,7 @@
                            
                             <tr>
                                 <td>
-                                    <div class="d-flex align-items-center justify-content-center">
+                                    <div class="d-flex align-items-center">
                                       
                                         @if (!empty($item->options->productImage->image))
                                         <img src="{{ asset('img/product/small/'.$item->options->productImage->image)}}" alt="">
@@ -83,25 +83,25 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between pb-2">
                             <div>Subtotal</div>
-                            <div>$400</div>
+                            <div>${{ Cart::subtotal()}}</div>
                         </div>
                         <div class="d-flex justify-content-between pb-2">
                             <div>Shipping</div>
-                            <div>$20</div>
+                            <div>$0</div>
                         </div>
                         <div class="d-flex justify-content-between summery-end">
                             <div>Total</div>
-                            <div>$420</div>
+                            <div>${{ Cart::subtotal()}}</div>
                         </div>
                         <div class="pt-5">
                             <a href="login.php" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>     
-                <div class="input-group apply-coupan mt-4">
+                {{-- <div class="input-group apply-coupan mt-4">
                     <input type="text" placeholder="Coupon Code" class="form-control">
                     <button class="btn btn-dark" type="button" id="button-addon2">Apply Coupon</button>
-                </div> 
+                </div>  --}}
             </div>
         </div>
     </div>

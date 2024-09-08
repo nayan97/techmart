@@ -209,24 +209,6 @@
 
 @section('customJs')
 <script type="text/javascript">
-  function addToCart(id){
 
-    $.ajax({
-        url: '{{ route("front.addToCart")}}',
-        type: 'POST',
-        data:{id:id},
-        dataType: 'json',
-        success: function(response){
-            if(response.status == true){
-                window.location.href = '{{ route("front.cart") }}';
-            } else {
-                alert(response.message)
-            }
-
-        }
-
-    });
-
-  }
 </script>
 @endsection
