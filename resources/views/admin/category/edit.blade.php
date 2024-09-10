@@ -171,7 +171,7 @@
     maxFiles: 1,
     paramName: 'image',
     addRemoveLinks: true,
-    acceptedFiles: "image/jpeg,image/png,image/gif",
+    acceptedFiles: "image/jpeg,image/png,image/gif,image/webp",
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }, success: function(file, response){
