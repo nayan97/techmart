@@ -106,11 +106,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div> --}}
 </section>
 
 @endsection
@@ -148,9 +143,7 @@
         data: {rowId:rowId, qty:qty},
         dataType: 'json',
         success: function(response){
-            if (response.status == true){
-                window.location.href = '{{ route("front.cart")}}';
-            }
+            window.location.href = '{{ route("front.cart")}}';
         }
     });
   }

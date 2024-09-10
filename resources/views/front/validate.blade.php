@@ -11,12 +11,17 @@
 
 
 @if(Session::has('success'))
-    <p class="alert alert-success">{{Session::get('success')}} <button class="close" data-dismiss="alert">&times;</button></p>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{Session::get('success')}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
  @endif
 
 
  @if(Session::has('error'))
-    <p class="alert alert-danger">{{Session::get('error')}} <button class="close" data-dismiss="alert">&times;</button></p>
-
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{Session::get('error')}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
  @endif
