@@ -43,6 +43,7 @@ Route::post('/update-cart',[CartController::class, 'updateCart'])->name('front.u
 Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name('front.deleteCartItem');
 
 
+Route::get('/login', [AuthController::class, 'login'])->name('account.login');
 Route::get('/register', [AuthController::class, 'register'])->name('account.register');
 Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
 
