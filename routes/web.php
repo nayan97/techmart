@@ -44,6 +44,7 @@ Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name
 
 
 Route::get('/register', [AuthController::class, 'register'])->name('account.register');
+Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
 
 
 Route::group(['prefix' => 'admin',], function(){

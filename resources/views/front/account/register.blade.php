@@ -19,18 +19,21 @@
                 <h4 class="modal-title">Register Now</h4>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Name" id="name" name="name">
+                    <p></p>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Email" id="email" name="email">
+                    <p></p>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Phone" id="phone" name="phone">
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+                    <p></p>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Confirm Password" id="cpassword" name="cpassword">
+                    <input type="password" class="form-control" placeholder="Confirm Password" id="password_confirmation" name="password_confirmation">
                 </div>
                 <div class="form-group small">
                     <a href="#" class="forgot-link">Forgot Password?</a>
@@ -49,12 +52,49 @@
         event.preventDefault();
 
         $.ajax({
-            url: '',
+            url: '{{ route("account.customerRegister")}}',
             type: "POST",
             data: $(this).serializeArray(),
             dataType: "json",
             success: function(response){
-                
+                 var errors = response.errors;
+
+                if (response.status == false){
+                    if(errors.name){
+                        $("#name").siblings("p").addClass('invalid feedback').html(errors.name); 
+                        $("#name").addClass('is-invalid');
+                    } else {
+                        $("#name").siblings("p").removeClass('invalid feedback').html(''); 
+                        $("#name").removeClass('is-invalid');
+                    }
+                    if(errors.email){
+                        $("#email").siblings("p").addClass('invalid feedback').html(errors.email); 
+                        $("#email").addClass('is-invalid');
+                    } else {
+                        $("#email").siblings("p").removeClass('invalid feedback').html(''); 
+                        $("#email").removeClass('is-invalid');
+                    }
+                    if(errors.password){
+                        $("#password").siblings("p").addClass('invalid feedback').html(errors.password); 
+                        $("#password").addClass('is-invalid');
+                    } else {
+                        $("#password").siblings("p").removeClass('invalid feedback').html(''); 
+                        $("#password").removeClass('is-invalid');
+                    }
+                } else {
+
+                    $("#name").siblings("p").removeClass('invalid feedback').html(''); 
+                    $("#name").removeClass('is-invalid');
+
+                    $("#email").siblings("p").removeClass('invalid feedback').html(''); 
+                    $("#email").removeClass('is-invalid');
+
+                    $("#password").siblings("p").removeClass('invalid feedback').html(''); 
+                    $("#password").removeClass('is-invalid');
+                }
+            },
+            error: function(jqXHR, execption){
+                console.log('something went wrong');
             }
         });
     });
