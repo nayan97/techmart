@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FrontController;
@@ -40,6 +41,9 @@ Route::get('/cart',[CartController::class, 'cart'])->name('front.cart');
 Route::post('/add-to-cart',[CartController::class, 'addToCart'])->name('front.addToCart');
 Route::post('/update-cart',[CartController::class, 'updateCart'])->name('front.updateCart');
 Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name('front.deleteCartItem');
+
+
+Route::get('/register', [AuthController::class, 'register'])->name('account.register');
 
 
 Route::group(['prefix' => 'admin',], function(){
