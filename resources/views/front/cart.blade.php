@@ -5,8 +5,8 @@
     <div class="container">
         <div class="light-font">
             <ol class="breadcrumb primary-color mb-0">
-                <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="white-text" href="#">Shop</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{ route('front.index')}}">Home</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{ route('shop.index')}}">Shop</a></li>
                 <li class="breadcrumb-item">Cart</li>
             </ol>
         </div>
@@ -17,6 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
+                @if (Cart::count() > 0)
                 <div class="table-responsive">
                     <table class="table" id="cart">
                         @include('front.validate')
@@ -29,8 +30,9 @@
                                 <th>Remove</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @if (!empty($cartContent))
+                        <tbody> 
+
+                           
                             @foreach ($cartContent as $item )
                                 
                            
@@ -70,11 +72,21 @@
                                 </td>
                             </tr>  
                             @endforeach
-                            @endif
+                       
                                                      
                         </tbody>
                     </table>
                 </div>
+            
+                @else
+                <div class="card">
+                    <div class="card-body d-flex justify-content-center">
+                        <h3>No product Found</h3>
+                    </div>
+                   
+                </div>
+                        
+                @endif
             </div>
             <div class="col-md-4">            
                 <div class="card cart-summery">

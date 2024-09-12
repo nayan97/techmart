@@ -108,8 +108,8 @@
       			</ul>      			
       		</div>   
 			<div class="right-nav py-0">
-				<a href="cart.php" class="ml-3 d-flex pt-2">
-					<i class="fas fa-shopping-cart text-primary"></i>					
+				<a href="{{ route('front.cart')}}" class="ml-3 d-flex pt-2">
+					<i class="fas fa-shopping-cart text-primary"> <span>{{Cart::instance('cart')->content()->count()}}</span></i>					
 				</a>
 			</div> 		
       	</nav>

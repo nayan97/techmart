@@ -36,7 +36,8 @@ class CartController extends Controller
                 Cart::add($product->id, $product->title, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product ->product_images->first() : '']);
 
                 $status = true;
-                $message = $product->title.' added in cart';
+                $message = $product->title.' added in your cart successfully';
+                session()->flash('success', $message);
 
             }else {
                 $status = false;
@@ -47,7 +48,8 @@ class CartController extends Controller
            Cart::add($product->id, $product->title, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product ->product_images->first() : '']);
 
               $status = true;
-                $message = $product->title.' added in cart';
+                $message = $product->title.' added in your cart successfully';
+                session()->flash('success', $message);
         }
             return response()->json([
                 'status' => $status,
