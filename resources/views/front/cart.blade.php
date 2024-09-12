@@ -66,7 +66,7 @@
                                     ${{ $item->price*$item->qty}}
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteCartItem('{{ $item->rowId}}')"><i class="fa fa-times"></i></button>
                                 </td>
                             </tr>  
                             @endforeach
@@ -147,6 +147,21 @@
         }
     });
   }
+
+  function deleteCartItem(rowId){
+        if (confirm('Are you sure you want to delete?')){
+            $.ajax({
+            url: '{{ route("front.deleteCartItem")}}',
+            type: 'POST',
+            data: {rowId:rowId},
+            dataType: 'json',
+            success: function(response){
+                window.location.href = '{{ route("front.cart")}}';
+            }
+        });
+     }
+    }
+
 
 
 </script>

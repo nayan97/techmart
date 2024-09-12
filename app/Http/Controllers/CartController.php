@@ -99,4 +99,14 @@ class CartController extends Controller
         ]);
     }
 
+    public function deleteCartItem(Request $request){
+        Cart::remove($request->rowId);
+
+        session()->flash('success', 'Cart item deleted successfully');
+        return response()->json([
+            'status' => true,
+            'message' => 'Cart cart item successfully'
+        ]);
+    }
+
 }
