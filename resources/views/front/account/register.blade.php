@@ -51,12 +51,16 @@
     $("#registationForm").submit(function(event){
         event.preventDefault();
 
+        $("button[type=submit]").prop('disabled', true);
+
         $.ajax({
             url: '{{ route("account.customerRegister")}}',
             type: "POST",
             data: $(this).serializeArray(),
             dataType: "json",
             success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+                
                  var errors = response.errors;
 
                 if (response.status == false){

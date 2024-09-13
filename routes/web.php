@@ -42,10 +42,21 @@ Route::post('/add-to-cart',[CartController::class, 'addToCart'])->name('front.ad
 Route::post('/update-cart',[CartController::class, 'updateCart'])->name('front.updateCart');
 Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name('front.deleteCartItem');
 
+// user middleware
 
-Route::get('/login', [AuthController::class, 'login'])->name('account.login');
-Route::get('/register', [AuthController::class, 'register'])->name('account.register');
-Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
+Route::group(['prefix' => 'account',], function(){
+   Route::group(['middleware' => 'guest'], function(){
+    
+        Route::get('/login', [AuthController::class, 'login'])->name('account.login');
+        Route::get('/register', [AuthController::class, 'register'])->name('account.register');
+        Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
+
+   });
+   Route::group(['middleware' => 'auth'], function(){
+
+   });
+
+});
 
 
 Route::group(['prefix' => 'admin',], function(){
