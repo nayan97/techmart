@@ -48,6 +48,8 @@ Route::group(['prefix' => 'account',], function(){
    Route::group(['middleware' => 'guest'], function(){
     
         Route::get('/login', [AuthController::class, 'login'])->name('account.login');
+        Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+        
         Route::get('/register', [AuthController::class, 'register'])->name('account.register');
         Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
 

@@ -40,7 +40,7 @@
                 </div> 
                 <button type="submit" class="btn btn-dark btn-block btn-lg" value="Register">Register</button>
             </form>			
-            <div class="text-center small">Already have an account? <a href="login.php">Login Now</a></div>
+            <div class="text-center small">Already have an account? <a href="{{ route('account.login')}}">Login Now</a></div>
         </div>
     </div>
 </section>
@@ -60,7 +60,7 @@
             dataType: "json",
             success: function(response){
                 $("button[type=submit]").prop('disabled', false);
-                
+
                  var errors = response.errors;
 
                 if (response.status == false){
