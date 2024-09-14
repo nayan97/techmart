@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -109,6 +110,20 @@ class CartController extends Controller
             'status' => true,
             'message' => 'Cart cart item successfully'
         ]);
+    }
+
+
+    public function checkout(){
+        // when cart is empty
+        if (Cart::count() == 0){
+            return redirect()->route('front.cart');
+        }
+
+        // when user is not logged in
+        if (Auth::check() == false){
+            return redirect()->route('account.login');
+        }
+        return view('front.checkout');
     }
 
 }
