@@ -109,7 +109,7 @@ class CartController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Cart cart item successfully'
-        ]);
+        ]);  
     }
 
 
@@ -120,9 +120,15 @@ class CartController extends Controller
         }
 
         // when user is not logged in
+
         if (Auth::check() == false){
+            if (!session()->has('url.intended')){
+
+                session(['url.intended' =>url()->current()]);
+            }
             return redirect()->route('account.login');
         }
+        session()->forget('url.intended');
         return view('front.checkout');
     }
 
