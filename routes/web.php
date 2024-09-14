@@ -49,6 +49,7 @@ Route::group(['prefix' => 'account',], function(){
     
         Route::get('/login', [AuthController::class, 'login'])->name('account.login');
         Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+      
         
         Route::get('/register', [AuthController::class, 'register'])->name('account.register');
         Route::post('/customer-register', [AuthController::class, 'customerRegister'])->name('account.customerRegister');
@@ -56,6 +57,7 @@ Route::group(['prefix' => 'account',], function(){
    });
    Route::group(['middleware' => 'auth'], function(){
         Route::get('/profile', [AuthController::class, 'profile'])->name('account.profile');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('account.logout');
    });
 
 });
