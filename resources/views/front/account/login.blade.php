@@ -14,6 +14,7 @@
 
 <section class=" section-10">
     <div class="container">
+        @include('front.validate')
         <div class="login-form">    
             <form action="{{ route('account.authenticate')}}" method="post">
                 @csrf

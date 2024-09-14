@@ -55,7 +55,7 @@ Route::group(['prefix' => 'account',], function(){
 
    });
    Route::group(['middleware' => 'auth'], function(){
-
+        Route::get('/profile', [AuthController::class, 'profile'])->name('account.profile');
    });
 
 });
