@@ -127,9 +127,18 @@
                     </div>
                 </div>   
                 
-                <div class="card payment-form ">                        
-                    <h3 class="card-title h5 mb-3">Payment Details</h3>
-                    <div class="card-body p-0">
+                <div class="card payment-form">                        
+                    <h3 class="card-title h5 mb-3">Payment Method</h3>
+
+                    <div class="">
+                        <input checked type="radio" name="pay_method" value="cod" id="pay_method_one">
+                        <label for="pay_method_one" class="form-check-label">COD</label>
+                    </div>
+                    <div class="">
+                        <input type="radio" name="pay_method" value="stripe" id="pay_method_two">
+                        <label for="pay_method_two" class="form-check-label">Stripe</label>
+                    </div>
+                    <div class="card-body p-0 d-none mt-3" id="card-payment-form">
                         <div class="mb-3">
                             <label for="card_number" class="mb-2">Card Number</label>
                             <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
@@ -144,10 +153,11 @@
                                 <input type="text" name="expiry_date" id="expiry_date" placeholder="123" class="form-control">
                             </div>
                         </div>
-                        <div class="pt-4">
-                            <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>
-                        </div>
-                    </div>                        
+                    
+                    </div> 
+                    <div class="pt-4">
+                        <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>
+                    </div>                       
                 </div>
 
                       
@@ -158,4 +168,19 @@
     </div>
 </section>
 
+@endsection
+
+@section('customJs')
+    <script>
+        $("#pay_method_one").click(function(){
+            if ($(this).is(":checked") == true){
+                $("#card-payment-form").addClass('d-none');
+            }
+        });
+        $("#pay_method_two").click(function(){
+            if ($(this).is(":checked") == true){
+                $("#card-payment-form").removeClass('d-none');
+            }
+        });
+    </script>
 @endsection
