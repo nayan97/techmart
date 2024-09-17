@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -136,5 +137,40 @@ class CartController extends Controller
             'countries' => $countries
         ]);
     }
+
+
+    public function processCheckout(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            // 'user_id' => 'required|exists:users,id',
+            // 'subtotal' => 'required|numeric|min:0|max:99999999.99',
+            // 'shipping' => 'required|numeric|min:0|max:99999999.99',
+            // 'coupon_code' => 'nullable|numeric',
+            // 'discount' => 'nullable|numeric|min:0|max:99999999.99',
+            // 'grand_total' => 'required|numeric|min:0|max:99999999.99',
+        
+            // user address
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'mobile' => 'required|string|max:15', // Consider a proper regex if you want mobile number format validation
+            'country_id' => 'required|exists:countries,id',
+            'address' => 'required|string|max:1000',
+            'apartment' => 'nullable|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip' => 'required|string|max:10', // You can customize this based on country format
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'something went wrong',
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
+
 
 }
