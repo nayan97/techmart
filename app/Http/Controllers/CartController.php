@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Country;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -185,9 +186,51 @@ class CartController extends Controller
                 'city' => $request->city,
                 'state' => $request->state,
                 'zip' => $request->zip
-                
+
                 ]
             );
+
+            // store data in order table
+
+            if ($request->pay_method == 'cod'){
+                $shipping = 0;
+                $discount = 0;
+                $subTotal = Cart::subtotal(2,'.','');
+                $grandTotal = $subTotal+$shipping;
+
+                $order = new Order;
+                $order->subtotal = $subTotal;  
+                $order->shipping = $shipping;  
+                $order->grand_total = $grandTotal; 
+                $order->user_id = $user->id;
+            
+                $order->first_name = $request->first_name;
+                $order->last_name = $request->last_name;
+                $order->email = $request->email;
+                $order->mobile = $request->mobile;
+                $order->country_id = $request->country;
+                $order->address = $request->address;
+                $order->apartment = $request->appartment;
+                $order->city = $request->city;
+                $order->state = $request->state;
+                $order->zip = $request->zip;
+                $order->notes = $request->notes;
+                $order->save();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'successfully created',
+                   
+                ]);
+             
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'something went wrong',
+               
+                ]);
+
+            }
     }
 
 
