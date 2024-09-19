@@ -29,17 +29,20 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
+                                        <p></p>
                                     </div>            
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+                                        <p></p>
                                     </div>            
                                 </div>
                                 
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <input type="text" name="email" id="email" class="form-control" placeholder="Email">
+                                        <p></p>
                                     </div>            
                                 </div>
 
@@ -54,14 +57,16 @@
                                             @endforeach
                                                 
                                             @endif
-                                            
+                                           
                                         </select>
+                                        <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" class="form-control"></textarea>
+                                        <p></p>
                                     </div>            
                                 </div>
 
@@ -74,28 +79,31 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <input type="text" name="city" id="city" class="form-control" placeholder="City">
+                                        <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <input type="text" name="state" id="state" class="form-control" placeholder="State">
+                                        <p></p>
                                     </div>            
                                 </div>
                                 
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <input type="text" name="zip" id="zip" class="form-control" placeholder="Zip">
+                                        <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile No.">
+                                        <p></p>
                                     </div>            
                                 </div>
                                 
-
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <textarea name="order_notes" id="order_notes" cols="30" rows="2" placeholder="Order Notes (optional)" class="form-control"></textarea>
@@ -200,6 +208,116 @@
                 data: $(this).serializeArray(),
                 dataType: 'json',
                 success: function(response){
+
+                var errors = response.errors;
+
+                if (errors.first_name){
+                    $("#first_name").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.first_name);
+                } else {
+                    $("#first_name").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }  
+
+                if (errors.last_name){
+                    $("#last_name").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.last_name);
+                } else {
+                    $("#last_name").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.email){
+                    $("#email").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.email);
+                } else {
+                    $("#email").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.country){
+                    $("#country").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.country);
+                } else {
+                    $("#country").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.address){
+                    $("#address").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.address);
+                } else {
+                    $("#address").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.city){
+                    $("#city").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.city);
+                } else {
+                    $("#city").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.state){
+                    $("#state").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.state);
+                } else {
+                    $("#state").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.zip){
+                    $("#zip").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.zip);
+                } else {
+                    $("#zip").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
+
+                if (errors.mobile){
+                    $("#mobile").addClass("is-invalid")
+                    .siblings("p")
+                    .addClass('invalid-feedback')
+                    .html(errors.mobile);
+                } else {
+                    $("#mobile").removeClass("is-invalid")
+                    .siblings("p")
+                    .removeClass('invalid-feedback')
+                    .html();
+                }
 
                 }
             });
