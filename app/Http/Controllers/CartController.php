@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\CustomerAddress;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -137,7 +138,8 @@ class CartController extends Controller
             'countries' => $countries
         ]);
     }
-
+            
+    // process checkout 
 
     public function processCheckout(Request $request){
 
@@ -163,6 +165,29 @@ class CartController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
+
+        // save user addresses
+
+        $user = Auth::user();
+
+        CustomerAddress::updateOrCreate(
+            ['user_id' => $user->id],
+
+            [
+                'user_id' => $user->id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'country_id' => $request->country,
+                'address' => $request->address,
+                'apartment' => $request->appartment,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip' => $request->zip
+                
+                ]
+            );
     }
 
 
