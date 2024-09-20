@@ -43,6 +43,7 @@ Route::post('/update-cart',[CartController::class, 'updateCart'])->name('front.u
 Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name('front.deleteCartItem');
 Route::get('/checkout',[CartController::class, 'checkout'])->name('front.checkout');
 Route::post('/process-checkout',[CartController::class, 'processCheckout'])->name('front.processCheckout');
+Route::get('/thankyou/{orderId}',[CartController::class, 'thankYou'])->name('front.thankyou');
 
 // user middleware
 

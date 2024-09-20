@@ -230,8 +230,13 @@ class CartController extends Controller
                     $orderItem->save();
                 }
 
+                session()->flash('success', 'Order Added Successfully');
+
+                Cart::destroy();
+
                 return response()->json([
                     'status' => true,
+                    'orderId' => $order->id,
                     'message' => 'successfully created',
                    
                 ]);
@@ -246,5 +251,9 @@ class CartController extends Controller
             }
     }
 
+
+    public function thankYou(){
+        return view('front.thankyou');
+    }
 
 }
