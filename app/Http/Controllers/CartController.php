@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Country;
 use App\Models\Product;
+use App\Models\OrderItems;
 use Illuminate\Http\Request;
 use App\Models\CustomerAddress;
 use Illuminate\Support\Facades\Auth;
@@ -216,6 +217,18 @@ class CartController extends Controller
                 $order->zip = $request->zip;
                 $order->notes = $request->notes;
                 $order->save();
+
+                //  store order item in order items table
+                foreach (Cart::content() as $item){
+                    $orderItem = new OrderItems;
+                    $orderItem->product_id = $item->id;
+                    $orderItem->order_id = $order->id;
+                    $orderItem->name = $item->name;
+                    $orderItem->qty = $item->qty;
+                    $orderItem->price = $item->price;
+                    $orderItem->total = $item->price*$item->qty;
+                    $orderItem->save();
+                }
 
                 return response()->json([
                     'status' => true,
