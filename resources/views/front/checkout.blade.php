@@ -28,20 +28,20 @@
                                 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->first_name : ''}}" type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
                                         <p></p>
                                     </div>            
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->last_name : ''}}" type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
                                         <p></p>
                                     </div>            
                                 </div>
                                 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <input type="text" name="email" id="email" class="form-control" placeholder="Email">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->email : ''}}" type="text" name="email" id="email" class="form-control" placeholder="Email">
                                         <p></p>
                                     </div>            
                                 </div>
@@ -53,7 +53,7 @@
                                             <option value="1">India</option>
                                             @if ($countries->isNotEmpty())
                                             @foreach ($countries as $country)
-                                            <option value="{{ $country -> id}}">{{ $country -> name}}</option>
+                                            <option {{ (!empty($customerAddress) && $customerAddress->country_id == $country->id) ? 'selected' : ''}} value="{{ $country -> id}}">{{ $country -> name}}</option>
                                             @endforeach
                                                 
                                             @endif
@@ -65,41 +65,41 @@
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" class="form-control"></textarea>
+                                        <textarea name="address" id="address" cols="30" rows="3" placeholder="Address" class="form-control">{{ (!empty($customerAddress)) ? $customerAddress->address : ''}}</textarea>
                                         <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <input type="text" name="appartment" id="appartment" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->appartment : ''}}" type="text" name="appartment" id="appartment" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
                                     </div>            
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <input type="text" name="city" id="city" class="form-control" placeholder="City">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->city : ''}}" type="text" name="city" id="city" class="form-control" placeholder="City">
                                         <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <input type="text" name="state" id="state" class="form-control" placeholder="State">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->state : ''}}" type="text" name="state" id="state" class="form-control" placeholder="State">
                                         <p></p>
                                     </div>            
                                 </div>
                                 
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <input type="text" name="zip" id="zip" class="form-control" placeholder="Zip">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->zip : ''}}" type="text" name="zip" id="zip" class="form-control" placeholder="Zip">
                                         <p></p>
                                     </div>            
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile No.">
+                                        <input value="{{ (!empty($customerAddress)) ? $customerAddress->mobile : ''}}" type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile No.">
                                         <p></p>
                                     </div>            
                                 </div>
