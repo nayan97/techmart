@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\admin\ProductImageController;
@@ -87,6 +88,9 @@ Route::group(['prefix' => 'admin',], function(){
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
         Route::post('/product-image/update', [ProductImageController::class, 'update'])->name('product-images.update');
         Route::delete('/product-image', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
+
+        Route::get('/shipping/create', [ShippingController::class, 'create'])->name('shipping.create');        
+        // Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
 
 
         // slug creator 
