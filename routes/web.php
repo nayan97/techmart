@@ -89,8 +89,9 @@ Route::group(['prefix' => 'admin',], function(){
         Route::post('/product-image/update', [ProductImageController::class, 'update'])->name('product-images.update');
         Route::delete('/product-image', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
 
-        Route::get('/shipping/create', [ShippingController::class, 'create'])->name('shipping.create');        
-        // Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
+        Route::get('/shipping/create', [ShippingController::class, 'create'])->name('shipping.create');
+        Route::post('/shipping', [ShippingController::class, 'store'])->name('shipping.store');           
+   
 
 
         // slug creator 
