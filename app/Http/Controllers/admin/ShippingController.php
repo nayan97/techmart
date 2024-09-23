@@ -46,4 +46,14 @@ class ShippingController extends Controller
             ]);
         }
     }
+
+    public function edit($id){
+        
+        $shippingCharge = ShippingCharge::find($id);
+        $countries = Country::get();
+        $data['countries'] =  $countries;
+        $data['shippingCharge'] =  $shippingCharge;
+
+        return view('admin.shipping.edit', $data);
+    }
 }
