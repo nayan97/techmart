@@ -22,7 +22,7 @@
         <!-- Default box -->
         <div class="container-fluid">
 
-            <form action="" method="post" id="shippingForm" name="shippingForm">
+            <form action="" method="put" id="shippingForm" name="shippingForm">
                 <div class="card">
                     <div class="card-body">	
                         @include('admin.validate')							
@@ -79,14 +79,14 @@
         var element =  $(this);
         $("button[type=submit]").prop('disabled', true);
         $.ajax({
-            url:'{{ route("shipping.store")}}',
-            type:'post',
+            url:'{{ route("shipping.update", $shippingCharge->id)}}',
+            type:'put',
             data: element.serializeArray(),
             dataType:'json',
             success: function(response){
                 $("button[type=submit]").prop('disabled', false);
                 if (response["status"] == true){
-                    window.location.href="{{ route('shipping.create')}}";
+                    window.location.href="{{ route('shipping.create') }}";
   
                 }else{
                         var errors = response['errors'];

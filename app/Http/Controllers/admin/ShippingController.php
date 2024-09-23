@@ -56,4 +56,32 @@ class ShippingController extends Controller
 
         return view('admin.shipping.edit', $data);
     }
+
+    
+    public function update(Request $request, $id){
+        $validator = Validator::make($request->all(),[
+            'country' => 'required',
+            'amount' => 'required|numeric'
+        ]);
+
+        if ($validator->passes()){
+            $shipping = ShippingCharge::find($id);
+            $shipping->country_id = $request->country;
+            $shipping->amount = $request->amount;
+            $shipping->save();
+
+            session()->flash('success', 'Shipping charges list updated successfully');
+            
+            return response()->json([
+                'status' => true,
+                'mesage' => 'Shipping'
+            ]);
+         
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
 }
