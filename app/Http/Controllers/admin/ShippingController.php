@@ -21,12 +21,22 @@ class ShippingController extends Controller
     }
 
     public function store(Request $request){
+
         $validator = Validator::make($request->all(),[
             'country' => 'required',
             'amount' => 'required|numeric'
         ]);
 
         if ($validator->passes()){
+            $count = ShippingCharge::where('country_id', $request->country)->count();
+
+            if ($count > 0) {
+                session()->flash('error', 'This country has been already teken');
+                 return response()->json([
+                     'status' => true,
+                 ]);
+            }
+
             $shipping = new ShippingCharge;
             $shipping->country_id = $request->country;
             $shipping->amount = $request->amount;
@@ -65,6 +75,16 @@ class ShippingController extends Controller
         ]);
 
         if ($validator->passes()){
+
+            $count = ShippingCharge::where('country_id', $request->country)->count();
+
+            if ($count > 0) {
+                session()->flash('error', 'This country has been already teken');
+                 return response()->json([
+                     'status' => true,
+                 ]);
+            }
+
             $shipping = ShippingCharge::find($id);
             $shipping->country_id = $request->country;
             $shipping->amount = $request->amount;
