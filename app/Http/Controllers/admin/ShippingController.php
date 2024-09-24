@@ -104,4 +104,25 @@ class ShippingController extends Controller
             ]);
         }
     }
+
+    public function destroy($id){
+        $shippingCharge = ShippingCharge::find($id);
+        if ($shippingCharge === null) {
+
+            session()->flash('error', 'Shipping not found');
+            
+            return response()->json([
+                'status' => true,
+            ]);
+        }
+        $shippingCharge->delete();
+
+        session()->flash('success', 'Shipping deleted successfully');
+            
+        return response()->json([
+            'status' => true,
+        ]);
+
+
+    }
 }

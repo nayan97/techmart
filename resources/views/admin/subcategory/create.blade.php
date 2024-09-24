@@ -166,8 +166,9 @@
         });
     });
 
-                  // code for slug
-                  $("#name").change(function(){
+        // code for slug
+        
+     $("#name").change(function(){
         element = $(this);
         $("button[type=submit]").prop('disabled', true);
         $.ajax({
