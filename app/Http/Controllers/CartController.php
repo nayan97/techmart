@@ -218,10 +218,33 @@ class CartController extends Controller
             // store data in order table
 
             if ($request->pay_method == 'cod'){
+
                 $shipping = 0;
                 $discount = 0;
                 $subTotal = Cart::subtotal(2,'.','');
                 $grandTotal = $subTotal+$shipping;
+
+                // calculate shipping
+                $shippingInfo = ShippingCharge::where('country_id',$request->country)->first();
+
+                $totalQty = 0;
+                foreach (Cart::content() as $item){
+                    $totalQty += $item->qty;
+                }
+
+                if( $shippingInfo != null){
+                    $shipping = $totalQty*$shippingInfo->amount;
+                    $grandTotal = $subTotal+$shipping;
+    
+                } else {
+                    
+                    $shippingInfo = ShippingCharge::where('country_id', 'rest_of_world')->first();
+            
+                    $shipping = $totalQty*$shippingInfo->amount;
+                    $grandTotal = $subTotal+$shipping;
+    
+    
+                }
 
                 $order = new Order;
                 $order->subtotal = $subTotal;  
@@ -285,7 +308,7 @@ class CartController extends Controller
     public function getOrderSummary(Request $request){
 
         $subTotal = Cart::subtotal(2, '.', '');
-        
+
         if ($request->country_id > 0 ){
            $shippingInfo = ShippingCharge::where('country_id',$request->country_id)->first();
 
