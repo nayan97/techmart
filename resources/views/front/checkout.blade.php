@@ -334,5 +334,17 @@
                 
             });
         });
+
+        $("#country").change(function(){
+            $.ajax({
+                url: "{{ route('front.getOrderSummary')}}",
+                type: "post",
+                data: {country_id: $(this).val()},
+                dataType: "json",
+                success: function(response){
+
+                }
+            })
+        });
     </script>
 @endsection

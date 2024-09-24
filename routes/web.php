@@ -46,6 +46,9 @@ Route::get('/checkout',[CartController::class, 'checkout'])->name('front.checkou
 Route::post('/process-checkout',[CartController::class, 'processCheckout'])->name('front.processCheckout');
 Route::get('/thankyou/{orderId}',[CartController::class, 'thankYou'])->name('front.thankyou');
 
+// change order summary
+Route::post('get-order-summery',[CartController::class, 'getOrderSummary'])->name('front.getOrderSummary');
+
 // user middleware
 
 Route::group(['prefix' => 'account',], function(){
