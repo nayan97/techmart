@@ -283,8 +283,10 @@ class CartController extends Controller
     // change order summary
 
     public function getOrderSummary(Request $request){
+
+        $subTotal = Cart::subtotal(2, '.', '');
+        
         if ($request->country_id > 0 ){
-            $subTotal = Cart::subtotal(2, '.', '');
            $shippingInfo = ShippingCharge::where('country_id',$request->country_id)->first();
 
            $totalQty = 0;
@@ -323,8 +325,8 @@ class CartController extends Controller
         } else {
             return response()->json([
                 'status' => true,
-                'grandTotal' => number_format($grandTotal,2 ),
-               'shippingCharge' => number_format(0,2),
+                'grandTotal' => number_format($subTotal,2 ),
+                'shippingCharge' => number_format(0,2),
         
             ]);
         }
