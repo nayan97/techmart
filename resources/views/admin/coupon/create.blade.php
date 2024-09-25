@@ -28,27 +28,37 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name">	
+                                    <label for="code">Code</label>
+                                    <input type="text" name="code" id="code" class="form-control" placeholder="Code">	
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="slug">Slug</label>
-                                    <input readonly type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
                                     <p></p>	
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <input type="hidden" id="image_id" name="image_id">
-                                    <label for="image">Image</label>
-                                    <div id="image" class="dropzone dz-clickable">
-                                        <div class="dz-message needsclick">    
-                                            <br>Drop files here or click to upload.<br><br>                                            
-                                        </div>
-                                    </div>
+                                    <label for="max_uses">Max uses</label>
+                                    <input type="number" name="max_uses" id="max_uses" class="form-control" placeholder="Max uses">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="max_uses_user">Max uses user</label>
+                                    <input type="number" name="max_uses_user" id="max_uses_user" class="form-control" placeholder="Max uses user">	
+                                    <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -62,13 +72,42 @@
                             </div>	
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="showcat">Show on Page </label>
-                                    <select class="form-control" name="showcat" id="showcat">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                    <label for="type">Coupon Type</label>
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="percent">Percent</option>
+                                        <option value="fixed">Fixed</option>
                                     </select>
                                 </div>
-                            </div>										
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="discount_amount">Discount amount</label>
+                                    <input type="number" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount amount">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="min_amount">Minimum amount</label>
+                                    <input type="number" name="min_amount" id="min_amount" class="form-control" placeholder="Minimum amount">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="starts_at">When Starts Coupon</label>
+                                    <input type="text" name="starts_at" id="starts_at" class="form-control" placeholder="When Starts Coupon">	
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="expires_at">When Expires Coupon</label>
+                                    <input type="text" name="expires_at" id="expires_at" class="form-control" placeholder="When Expires Coupon">	
+                                    <p></p>
+                                </div>
+                            </div>
                         </div>
                     </div>							
                 </div>
@@ -89,6 +128,17 @@
 @section('customJs')
 
 <script>
+    $(document).ready(function(){
+        $('#starts_at').datetimepicker({
+            // options here
+            format:'Y-m-d H:i:s',
+        });
+        $('#expires_at').datetimepicker({
+            // options here
+            format:'Y-m-d H:i:s',
+        });
+    });
+
     $("#catForm").submit(function(event) {
         event.preventDefault(); 
         var element =  $(this);
