@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
 @section('content')
-<section>
+<section style="min-height: 400px;">
     <div class="container">
         <div class="col-md-12 text-center py-5">
             @include('front.validate')
