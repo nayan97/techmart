@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 
@@ -86,6 +87,7 @@ Route::group(['prefix' => 'admin',], function(){
         Route::resource('category', CategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('subcategory', SubCategoryController::class);
+        Route::resource('discountcode', DiscountCodeController::class);
         // products route
         Route::resource('products', ProductController::class);
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
