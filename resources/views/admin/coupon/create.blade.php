@@ -22,7 +22,7 @@
         <!-- Default box -->
         <div class="container-fluid">
 
-            <form action="" method="post" id="catForm" name="catForm">
+            <form action="" method="post" id="discountForm" name="discountForm">
                 <div class="card">
                     <div class="card-body">								
                         <div class="row">
@@ -139,12 +139,12 @@
         });
     });
 
-    $("#catForm").submit(function(event) {
+    $("#discountForm").submit(function(event) {
         event.preventDefault(); 
         var element =  $(this);
         $("button[type=submit]").prop('disabled', true);
         $.ajax({
-            url:'{{ route("category.store")}}',
+            url:'{{ route("discountcode.store")}}',
             type:'post',
             data: element.serializeArray(),
             dataType:'json',
@@ -162,22 +162,22 @@
 
                 }else{
                         var errors = response['errors'];
-                    if (errors['name']){
-                        $("#name").addClass('is-invalid')
+                    if (errors['code']){
+                        $("#code").addClass('is-invalid')
                         .siblings('p')
-                        .addClass('invalid-feedback').html(errors['name']);
+                        .addClass('invalid-feedback').html(errors['code']);
                     }else{
-                        $("#name").removeClass('is-invalid')
+                        $("#code").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                     }
 
-                    if (errors['slug']){
-                        $("#slug").addClass('is-invalid')
+                    if (errors['discount_amount']){
+                        $("#discount_amount").addClass('is-invalid')
                         .siblings('p')
-                        .addClass('invalid-feedback').html(errors['slug']);
+                        .addClass('invalid-feedback').html(errors['discount_amount']);
                     }else{
-                        $("#slug").removeClass('is-invalid')
+                        $("#discount_amount").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
 
@@ -192,47 +192,6 @@
         });
     });
 
-    Dropzone.autoDiscover = false;    
-    const dropzone = $("#image").dropzone({ 
-    init: function() {
-        this.on('addedfile', function(file) {
-            if (this.files.length > 1) {
-                this.removeFile(this.files[0]);
-            }
-        });
-    },
-
-    url:  "{{ route('temp-images.create')}}",
-    maxFiles: 1,
-    paramName: 'image',
-    addRemoveLinks: true,
-    acceptedFiles: "image/jpeg,image/png,image/gif",
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }, success: function(file, response){
-        $("#image_id").val(response.image_id);
-       
-    }
-  });
-        // code for slug
-  $("#name").change(function(){
-        element = $(this);
-        $("button[type=submit]").prop('disabled', true);
-        $.ajax({
-            url:'{{ route("getSlug")}}',
-            type:'get',
-            data: {title: element.val()},
-            dataType:'json',
-            success: function(response){
-                $("button[type=submit]").prop('disabled', false);
-
-                if (response["status"] == true) {
-                    $("#slug").val(response["slug"]);
-                }
-            }
-
-        });  
-    });
 </script>
     
 @endsection
