@@ -180,8 +180,28 @@
                         $("#discount_amount").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
-
-                  }
+                     }
+                     if (errors['starts_at']){
+                        $("#starts_at").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback').html(errors['starts_at']);
+                    }else{
+                        $("#starts_at").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+                        
+                    }
+                    if (errors['expires_at']){
+                        $("#expires_at").addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback').html(errors['expires_at']);
+                    }else{
+                        $("#expires_at").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
+                     
+                        
+                    }
                 }
    
 
