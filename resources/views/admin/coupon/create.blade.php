@@ -151,7 +151,7 @@
             success: function(response){
                 $("button[type=submit]").prop('disabled', false);
                 if (response["status"] == true){
-                    window.location.href="{{ route('category.index')}}";
+                    window.location.href="{{ route('discountcode.index')}}";
                     $("#name").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");

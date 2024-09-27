@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
+use App\Models\DiscountCoupon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -45,6 +46,25 @@ class DiscountCodeController extends Controller
             'expires_at' => 'nullable|date|after_or_equal:starts_at',
         ]);
         if ($validator->passes()){
+            $discountCode = new DiscountCoupon();
+
+            $discountCode->code = $request->code;
+            $discountCode->name = $request->name;
+            $discountCode->description = $request->description;
+            $discountCode->max_uses = $request->max_uses;
+            $discountCode->max_uses_user = $request->max_uses_user;
+            $discountCode->type = $request->type;
+            $discountCode->discount_amount = $request->discount_amount;
+            $discountCode->min_amount = $request->min_amount;
+            $discountCode->status = $request->status;
+            $discountCode->starts_at = $request->starts_at;
+            $discountCode->expires_at = $request->expires_at;
+            $discountCode->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Discount code saved successfully'
+            ]);
 
         } else {
             return response()->json([
