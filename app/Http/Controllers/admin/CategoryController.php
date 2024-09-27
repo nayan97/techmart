@@ -19,7 +19,8 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {   $categories = category::latest();
+    {  
+         $categories = category::latest();
         if (!empty($request->get('keyword'))) {
             $categories = $categories->where('name', 'like', '%'.$request->get('keyword').'%');
         }

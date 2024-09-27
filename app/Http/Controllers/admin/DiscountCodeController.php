@@ -13,9 +13,14 @@ class DiscountCodeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.coupon.index');
+        $discountCoupon = DiscountCoupon::latest();
+        if (!empty($request->get('keyword'))) {
+            $discountCoupon= $discountCoupon->where('name', 'like', '%'.$request->get('keyword').'%');
+        }
+        $discountCoupon =  $discountCoupon->paginate(10);
+        return view('admin.coupon.index', compact('discountCoupon'));
     }
 
     /**
