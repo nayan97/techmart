@@ -158,7 +158,65 @@ class DiscountCodeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $discountCode = DiscountCoupon::find($id);
+
+        $validator = Validator::make($request->all(),[
+
+            'code' => 'required',
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'max_uses' => 'nullable|integer|min:1',
+            'max_uses_user' => 'nullable|integer|min:1',
+            'type' => 'required|in:percent,fixed',
+            'discount_amount' => 'required|numeric|min:0|max:9999999999.99',
+            'min_amount' => 'nullable|numeric|min:0|max:9999999999.99',
+            'status' => 'integer|in:0,1',
+
+        ]);
+        if ($validator->passes()){
+            
+            //ending date of coupon
+
+            if (!empty($request->starts_at) && !empty($request->expires_at)){
+
+                $expiresAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->expires_at);
+                $startAt = Carbon::createFromFormat('Y-m-d H:i:s', $request->starts_at);
+
+                if ($expiresAt->gt($startAt) == false){
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['expires_at' => 'Expiry date must be greater than start date']
+                    ]);
+                }
+            }
+
+
+            $discountCode->code = $request->code;
+            $discountCode->name = $request->name;
+            $discountCode->description = $request->description;
+            $discountCode->max_uses = $request->max_uses;
+            $discountCode->max_uses_user = $request->max_uses_user;
+            $discountCode->type = $request->type;
+            $discountCode->discount_amount = $request->discount_amount;
+            $discountCode->min_amount = $request->min_amount;
+            $discountCode->status = $request->status;
+            $discountCode->starts_at = $request->starts_at;
+            $discountCode->expires_at = $request->expires_at;
+            $discountCode->save();
+
+            session()->flash('success','Coupon code updated');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Discount code saved updated'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     /**
