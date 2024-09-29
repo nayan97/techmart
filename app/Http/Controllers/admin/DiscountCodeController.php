@@ -142,7 +142,15 @@ class DiscountCodeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $coupon = DiscountCoupon::find($id);
+
+        if ($coupon === null){
+            session()->flash('error','Item not found');
+
+            return redirect()->route('discountcode.index');
+        }
+        $data['coupon']  = $coupon;
+        return view('admin.coupon.edit', $data);
     }
 
     /**
