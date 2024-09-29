@@ -26,7 +26,7 @@
                 <form action="" method="get">
                     <div class="card-header">
                         <div class="card-title">
-                            <button type="button" onclick="window.location.href='{{ route('category.index')}}'" class="btn btn-default btn-sm">All Categories</button>
+                            <button type="button" onclick="window.location.href='{{ route('discountcode.index')}}'" class="btn btn-default btn-sm">All Coupons</button>
                         </div>
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
@@ -50,6 +50,8 @@
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Discount</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                                 <th width="100">Status</th>
                                 <th width="100">Action</th>
                             </tr>
@@ -68,6 +70,8 @@
                                             ${{$item->discount_amount}}
                                         @endif
                                     </td>
+                                    <td>{{$item->starts_at}}</td>
+                                    <td>{{$item->expires_at}}</td>
                                     <td>
                                         @if ($item->status == 1)
                                         <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -98,7 +102,7 @@
                             @else
 
                                 <tr>
-                                    <p>No Data Founds</p>
+                                    <p class="text-center mt-3">No Data Founds</p>
                                 </tr>
                                 
                             @endif

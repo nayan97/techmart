@@ -8,10 +8,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Category</h1>
+                    <h1>Create discount coupon</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('category.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('discountcode.index')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -97,14 +97,14 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="starts_at">When Starts Coupon</label>
-                                    <input type="text" name="starts_at" id="starts_at" class="form-control" placeholder="When Starts Coupon">	
+                                    <input autocomplete="off" type="text" name="starts_at" id="starts_at" class="form-control" placeholder="When Starts Coupon">	
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="expires_at">When Expires Coupon</label>
-                                    <input type="text" name="expires_at" id="expires_at" class="form-control" placeholder="When Expires Coupon">	
+                                    <input autocomplete="off" type="text" name="expires_at" id="expires_at" class="form-control" placeholder="When Expires Coupon">	
                                     <p></p>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary">Create</button>
-                    <a href="{{ route('category.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{ route('discountcode.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         
