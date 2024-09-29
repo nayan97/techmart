@@ -18,6 +18,7 @@ class DiscountCodeController extends Controller
         $discountCoupon = DiscountCoupon::latest();
         if (!empty($request->get('keyword'))) {
             $discountCoupon= $discountCoupon->where('name', 'like', '%'.$request->get('keyword').'%');
+            $discountCoupon= $discountCoupon->orWhere('code', 'like', '%'.$request->get('keyword').'%');
         }
         $discountCoupon =  $discountCoupon->paginate(10);
         return view('admin.coupon.index', compact('discountCoupon'));
@@ -159,6 +160,14 @@ class DiscountCodeController extends Controller
     public function update(Request $request, string $id)
     {
         $discountCode = DiscountCoupon::find($id);
+        if ($discountCode === null){
+
+            session()->flash('error','Item not found');
+            
+            return response()->json([
+                'status' => true,
+            ]);
+        }
 
         $validator = Validator::make($request->all(),[
 
@@ -222,8 +231,24 @@ class DiscountCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(Request $request, $id)
+    { 
+          $coupon = DiscountCoupon::find($id);
+          if ($coupon === null){
+
+            session()->flash('error','Item not found');
+            
+            return response()->json([
+                'status' => true,
+            ]);
+        }
+
+        $coupon->delete();
+
+        session()->flash('success','Coupon Code deleted successfully');
+            
+        return response()->json([
+            'status' => true,
+        ]);
     }
 }
