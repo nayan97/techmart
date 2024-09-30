@@ -50,6 +50,9 @@ Route::get('/thankyou/{orderId}',[CartController::class, 'thankYou'])->name('fro
 // change order summary
 Route::post('get-order-summery',[CartController::class, 'getOrderSummary'])->name('front.getOrderSummary');
 
+// apply discount code
+Route::post('apply-discount',[CartController::class, 'applyDiscount'])->name('front.applyDiscount');
+
 // user middleware
 
 Route::group(['prefix' => 'account',], function(){

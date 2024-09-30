@@ -140,7 +140,12 @@
                                 <div class="h5"><strong id="grandTotal">${{ number_format($grandTotal,2)}}</strong></div>
                             </div>                            
                         </div>
-                    </div>   
+                    </div>  
+                    
+                    <div class="input-group apply-coupan mt-4">
+                        <input name="discount_code" id="discount_code" type="text" placeholder="Coupon Code" class="form-control">
+                        <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
+                    </div> 
                     
                     <div class="card payment-form">                        
                         <h3 class="card-title h5 mb-3">Payment Method</h3>
@@ -347,6 +352,19 @@
                     $("#grandTotal").html('$'+response.grandTotal);
 
                  }
+
+                }
+            })
+        });
+
+        $("#apply-discount").click(function(){
+            $.ajax({
+                url: "{{ route('front.applyDiscount')}}",
+                type: "post",
+                data: {code: $("#discount_code").val(), country: $("#country").val()},
+                dataType: "json",
+                success: function(response){
+         
 
                 }
             })
