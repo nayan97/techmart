@@ -146,10 +146,24 @@
                         </div>
                     </div>  
                     
-                    <div class="input-group apply-coupan mt-4">
+                    <div class="input-group apply-coupan mt-3">
                         <input name="discount_code" id="discount_code" type="text" placeholder="Coupon Code" class="form-control">
                         <button class="btn btn-dark" type="button" id="apply-discount">Apply Coupon</button>
                     </div> 
+
+                    <div id="discount-wrapper">
+                        @if (Session::has('code'))
+                            <div class="" id="discount_response">
+                                <div class="mt-2 card p-3">
+                                    <div class="h5">
+                                        <strong>{{Session::get('code')->code}}</strong>
+                                        <span class="btn btn-sm btn-danger"><a id="remove-discount"><i class="fa fa-times"></i></a></span>
+                                    </div>
+                                </div> 
+                            </div>
+                         @endif
+
+                    </div>
                     
                     <div class="card payment-form">                        
                         <h3 class="card-title h5 mb-3">Payment Method</h3>
@@ -372,6 +386,26 @@
                     $("#shippingAmount").html('$'+response.shippingCharge);
                     $("#grandTotal").html('$'+response.grandTotal);
                     $("#discount_value").html('$'+response.discount);
+                    $("#discount-wrapper").html(response.discountShow);
+
+                 }
+                }
+            })
+        });
+
+        $("#remove-discount").click(function(){
+            $.ajax({
+                url: "{{ route('front.removeCoupon')}}",
+                type: "post",
+                data: {country_id: $("#country").val()},
+                dataType: "json",
+                success: function(response){
+                    if (response.status == true){
+                    $("#shippingAmount").html('$'+response.shippingCharge);
+                    $("#grandTotal").html('$'+response.grandTotal);
+                    $("#discount_value").html('$'+response.discount);
+
+                    $("#discount_response").html('');
 
                  }
                 }

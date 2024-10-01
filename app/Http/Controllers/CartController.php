@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Order;
 use App\Models\Country;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use App\Models\ShippingCharge;
 use Illuminate\Support\Carbon;
 use App\Models\CustomerAddress;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
 
@@ -143,6 +145,19 @@ class CartController extends Controller
 
         $countries = Country::orderBy('name', 'ASC')->get();
 
+        $subTotal = Cart::subtotal(2, '.','');
+
+        // apply discount here
+        if(session()->has('code')){
+            $code = session()->get('code');
+            if ($code->type == 'percent'){
+                $discount = ($code->discount_amount/100)*$subTotal;
+            } else {
+                $discount = $code->discount_amount;
+                    
+            }
+        }
+
         // Calculate shipping here
 
         if ($customerAddress != ''){
@@ -158,11 +173,11 @@ class CartController extends Controller
             }
     
             $totalShippingCharge = $totalQty*$shippingInfo->amount;
-            $grandTotal = Cart::subtotal(2, '.','')+$totalShippingCharge;
+            $grandTotal = ($subTotal-$discount)+$totalShippingCharge;
 
         } else {
             $totalShippingCharge = 0;
-            $grandTotal = Cart::subtotal(2, '.','');
+            $grandTotal = ($subTotal-$discount);
         }
 
   
@@ -321,6 +336,7 @@ class CartController extends Controller
 
         $subTotal = Cart::subtotal(2, '.', '');
         $discount = 0;
+        $discountShow = '';
 
         // apply discount here
         if(session()->has('code')){
@@ -331,6 +347,15 @@ class CartController extends Controller
                 $discount = $code->discount_amount;
                  
             }
+
+            $discountShow = '<div class="" id="discount_response">
+                            <div class="mt-2 card p-3">
+                                <div class="h5">
+                                    <strong>'.Session::get('code')->code.'</strong>
+                                    <span class="btn btn-sm btn-danger"><a id="remove-discount"><i class="fa fa-times"></i></a></span>
+                                </div>
+                            </div> 
+                        </div>';
 
         }
 
@@ -351,6 +376,7 @@ class CartController extends Controller
                     'status' => true,
                     'grandTotal' => number_format($grandTotal,2 ),
                     'discount' =>  $discount,
+                    'discountShow' => $discountShow,
                     'shippingCharge' => number_format($shippingCharge,2),
             
                 ]);
@@ -366,6 +392,7 @@ class CartController extends Controller
                'status' => true,
                'grandTotal' => number_format($grandTotal,2 ),
                'discount' =>  $discount,
+               'discountShow' => $discountShow,
                'shippingCharge' => number_format($shippingCharge,2),
        
            ]);
@@ -378,6 +405,7 @@ class CartController extends Controller
                 'status' => true,
                 'grandTotal' => number_format(($subTotal-$discount),2 ),
                 'discount' =>  $discount,
+                'discountShow' => $discountShow,
                 'shippingCharge' => number_format(0,2),
         
             ]);
@@ -425,6 +453,12 @@ class CartController extends Controller
         }
     session()->put('code', $code);
     return $this->getOrderSummary($request);
+  }
+
+  public function removeCoupon(Request $request){
+    session()->forget('code');
+    return $this->getOrderSummary($request);
+
   }
 
 }
