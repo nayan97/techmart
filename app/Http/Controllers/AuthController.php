@@ -90,5 +90,9 @@ class AuthController extends Controller
         // $admin = Auth::guard('admin')->logout();
         return redirect()->route('account.login')->with('success', 'Logout Successfully');
     }
+
+    public function myOrders(){
+        return view('front.account.order');
+    }
 }
 
