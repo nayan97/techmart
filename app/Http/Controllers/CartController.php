@@ -291,7 +291,7 @@ class CartController extends Controller
                 $order->shipping = $shipping;  
                 $order->grand_total = $grandTotal; 
                 $order->discount = $discount; 
-                // $order->coupon_code_id = $discountCodeId; 
+                $order->coupon_code_id = $discountCodeId; 
                 $order->coupon_code = $promoCode; 
                 $order->user_id = $user->id;
             
@@ -468,6 +468,33 @@ class CartController extends Controller
                 
             }
         }
+
+        // Max Uses check
+
+        $couponUsed = Order::where('coupon_code_id', $code->id)->count();
+
+        if ($couponUsed >= $code->max_uses) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This coupon is already used max time',
+        
+            ]);
+        }
+
+        
+        // Max Uses user check
+        
+        $couponUsedByUser = Order::where(['coupon_code_id' => $code->id, 'user_id' => Auth::user()->id])->count();
+
+        if ($couponUsedByUser>= $code->max_uses_user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This coupon is already used by You',
+        
+            ]);
+        }
+
+
     session()->put('code', $code);
     return $this->getOrderSummary($request);
   }

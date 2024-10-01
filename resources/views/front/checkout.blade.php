@@ -154,7 +154,7 @@
                     <div id="discount-wrapper">
                         @if (Session::has('code'))
                             <div class="" id="discount_response">
-                                <div class="mt-2 card p-3">
+                                <div class="mt-3 card p-3">
                                     <div class="h5">
                                         <strong>{{Session::get('code')->code}}</strong>
                                         <span class="btn btn-sm btn-danger"><a id="remove-discount"><i class="fa fa-times"></i></a></span>
@@ -391,6 +391,9 @@
                     $("#discount-wrapper").html(response.discountShow);
 
                  }
+                 else {
+                    $("#discount-wrapper").html("<span class='text-danger'>"+response.message+"</span>");
+                }
                 }
             })
         });
@@ -408,9 +411,9 @@
                     $("#discount_value").html('$'+response.discount);
 
                     $("#discount_response").html('');
-                    $("#diccount_code").val('');
+                    $("#discount_code").val('');
 
-                 }
+                 } 
                 }
             })
         });

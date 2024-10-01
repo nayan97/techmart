@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->double('subtotal',10,2);
             $table->double('shipping',10,2);
-            $table->double('coupon_code')->nullable();
+            $table->integer('coupon_code_id')->nullable();
+            $table->string('coupon_code')->nullable();
             $table->double('discount',10,2)->nullable();
             $table->double('grand_total',10,2);
-
+        
             // user address
             $table->string('first_name');
             $table->string('last_name');
