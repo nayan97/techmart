@@ -375,6 +375,8 @@
             })
         });
 
+    
+
         $("#apply-discount").click(function(){
             $.ajax({
                 url: "{{ route('front.applyDiscount')}}",
@@ -393,7 +395,7 @@
             })
         });
 
-        $("#remove-discount").click(function(){
+        $('body').on('click', "#remove-discount",function(){
             $.ajax({
                 url: "{{ route('front.removeCoupon')}}",
                 type: "post",
@@ -406,10 +408,12 @@
                     $("#discount_value").html('$'+response.discount);
 
                     $("#discount_response").html('');
+                    $("#diccount_code").val('');
 
                  }
                 }
             })
         });
+    
     </script>
 @endsection

@@ -248,8 +248,24 @@ class CartController extends Controller
 
                 $shipping = 0;
                 $discount = 0;
+                $discountCodeId = '';
+                $promoCode = '';
                 $subTotal = Cart::subtotal(2,'.','');
-                $grandTotal = $subTotal+$shipping;
+
+                // apply discount here
+                if(session()->has('code')){
+                    $code = session()->get('code');
+                    if ($code->type == 'percent'){
+                        $discount = ($code->discount_amount/100)*$subTotal;
+                    } else {
+                        $discount = $code->discount_amount;    
+                    }
+
+                    $discountCodeId = $code->id;
+                    $promoCode = $code->code;
+                }
+
+                // $grandTotal = ($subTotal - $discount)+$shipping;
 
                 // calculate shipping
                 $shippingInfo = ShippingCharge::where('country_id',$request->country)->first();
@@ -261,22 +277,22 @@ class CartController extends Controller
 
                 if( $shippingInfo != null){
                     $shipping = $totalQty*$shippingInfo->amount;
-                    $grandTotal = $subTotal+$shipping;
+                    $grandTotal = ($subTotal - $discount)+$shipping;
     
-                } else {
-                    
+                } else { 
                     $shippingInfo = ShippingCharge::where('country_id', 'rest_of_world')->first();
             
                     $shipping = $totalQty*$shippingInfo->amount;
-                    $grandTotal = $subTotal+$shipping;
-    
-    
+                    $grandTotal = ($subTotal - $discount)+$shipping;
                 }
-
+                        
                 $order = new Order;
                 $order->subtotal = $subTotal;  
                 $order->shipping = $shipping;  
                 $order->grand_total = $grandTotal; 
+                $order->discount = $discount; 
+                // $order->coupon_code_id = $discountCodeId; 
+                $order->coupon_code = $promoCode; 
                 $order->user_id = $user->id;
             
                 $order->first_name = $request->first_name;
@@ -307,6 +323,7 @@ class CartController extends Controller
                 session()->flash('success', 'Order Added Successfully');
 
                 Cart::destroy();
+                session()->forget('code');
 
                 return response()->json([
                     'status' => true,
@@ -349,13 +366,13 @@ class CartController extends Controller
             }
 
             $discountShow = '<div class="" id="discount_response">
-                            <div class="mt-2 card p-3">
-                                <div class="h5">
-                                    <strong>'.Session::get('code')->code.'</strong>
-                                    <span class="btn btn-sm btn-danger"><a id="remove-discount"><i class="fa fa-times"></i></a></span>
-                                </div>
-                            </div> 
-                        </div>';
+                <div class="mt-2 card p-3">
+                    <div class="h5">
+                        <strong>'.Session::get('code')->code.'</strong>
+                        <span class="btn btn-sm btn-danger"><a id="remove-discount"><i class="fa fa-times"></i></a></span>
+                    </div>
+                </div> 
+            </div>';
 
         }
 
