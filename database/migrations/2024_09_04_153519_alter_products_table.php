@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sub_categories', function(Blueprint $table){
+        Schema::table('products', function(Blueprint $table){
          
              $table->dropColumn('short_description');
              $table->dropColumn('shipping_returns');

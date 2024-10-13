@@ -6,7 +6,7 @@
     <div class="container">
         <div class="light-font">
             <ol class="breadcrumb primary-color mb-0">
-                <li class="breadcrumb-item"><a class="white-text" href="#">My Account</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="{{ route('account.profile')}}">My Account</a></li>
                 <li class="breadcrumb-item">Settings</li>
             </ol>
         </div>
@@ -36,50 +36,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="order-detail.php">OR756374</a>
-                                        </td>
-                                        <td>11 Nav, 2022</td>
-                                        <td>
-                                            <span class="badge bg-success">Delivered</span>
-                                            
-                                        </td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="order-detail.php">OR756374</a>
-                                        </td>
-                                        <td>10 Oct, 2022</td>
-                                        <td>
-                                            <span class="badge bg-success">Delivered</span>
-                                            
-                                        </td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="order-detail.php">OR756374</a>
-                                        </td>
-                                        <td>02 Sep, 2022</td>
-                                        <td>
-                                            <span class="badge bg-success">Delivered</span>
-                                            
-                                        </td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="order-detail.php">OR756374</a>
-                                        </td>
-                                        <td>01 Dec, 2022</td>
-                                        <td>
-                                            <span class="badge bg-success">Delivered</span>
-                                            
-                                        </td>
-                                        <td>$400</td>
-                                    </tr>                                        
+                                    @if ($orders-> isNotEmpty())
+                                    @foreach ($orders as $order )
+                                        <tr>
+                                            <td>
+                                                <a href="order-detail.php">{{ $order->id}}</a>
+                                            </td>
+                                            <td>{{  \Carbon\Carbon::parse($order->created_at)->format('d M, Y')}}</td>
+                                            <td>
+                                                <span class="badge bg-success">Delivered</span>
+                                                
+                                            </td>
+                                            <td>{{ number_format($order->grand_total,2)}}</td>
+                                        </tr>  
+                                    @endforeach
+
+                                    @else
+                                        <tr>
+                                            <td colspan="3">You Have No Order Yet!</td>
+                                        </tr>
+                             
+                                    @endif
+                                                                       
                                 </tbody>
                             </table>
                         </div>                            
