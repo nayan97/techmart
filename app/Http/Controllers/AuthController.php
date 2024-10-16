@@ -100,5 +100,10 @@ class AuthController extends Controller
         $data ['orders'] = $orders;
         return view('front.account.order', $data);
     }
+
+    public function orderDetail($id){
+        $data = [];
+        return view('front.account.order-detail', $data);
+    }
 }
 
