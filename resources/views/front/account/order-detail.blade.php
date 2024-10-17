@@ -35,7 +35,7 @@
                                         <h6 class="heading-xxxs text-muted">Order No:</h6>
                                         <!-- Text -->
                                         <p class="mb-lg-0 fs-sm fw-bold">
-                                        673290789
+                                       {{ $order->id}}
                                         </p>
                                     </div>
                                     <div class="col-6 col-lg-3">
@@ -53,7 +53,15 @@
                                         <h6 class="heading-xxxs text-muted">Status:</h6>
                                         <!-- Text -->
                                         <p class="mb-0 fs-sm fw-bold">
-                                        Awating Delivery
+                                            @if ($order->status == 'pending')
+                                                    
+                                            <span class="badge bg-danger">Pending</span>
+                                            @elseif($order->status == 'shipped')
+                                            <span class="badge bg-info">Shipped</span>
+                                            @else
+                                            <span class="badge bg-success">Delivered</span>
+                                            
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="col-6 col-lg-3">
@@ -61,7 +69,7 @@
                                         <h6 class="heading-xxxs text-muted">Order Amount:</h6>
                                         <!-- Text -->
                                         <p class="mb-0 fs-sm fw-bold">
-                                        $259.00
+                                            {{ number_format($order->grand_total,2)}}
                                         </p>
                                     </div>
                                 </div>
@@ -79,55 +87,37 @@
 
                         <!-- List group -->
                         <ul>
-                            <li class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col-4 col-md-3 col-xl-2">
-                                        <!-- Image -->
-                                        <a href="product.html"><img src="images/product-1.jpg" alt="..." class="img-fluid"></a>
-                                    </div>
-                                    <div class="col">
-                                        <!-- Title -->
-                                        <p class="mb-4 fs-sm fw-bold">
-                                            <a class="text-body" href="product.html">Cotton floral print Dress x 1</a> <br>
-                                            <span class="text-muted">$40.00</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col-4 col-md-3 col-xl-2">
-                                        <!-- Image -->
-                                        <a href="#"><img src="images/product-2.jpg" alt="..." class="img-fluid"></a>
-                                    </div>
-                                    <div class="col">
-                                        <!-- Title -->
-                                        <p class="mb-4 fs-sm fw-bold">
-                                            <a class="text-body" href="#">Suede cross body Bag x 1</a> <br>
-                                            <span class="text-muted">$49.00</span>
-                                        </p>                                       
-                                    </div>
-                                </div>
-                            </li>
+                            @foreach ($orderItems as $orderItem )
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-4 col-md-3 col-xl-2">
+                                            <!-- Image -->
+                                            @php
+                                                $productImage = productImage( $orderItem->product_id);
+                                            @endphp
 
-                            <li class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col-4 col-md-3 col-xl-2">
-                                        <!-- Image -->
-                                        <a href="#"><img src="images/product-3.jpg" alt="..." class="img-fluid"></a>
+                                            @if (!empty($productImage->image))
+                                            <img src="{{ asset('img/product/small/'.$productImage->image)}}" class="img-fluid" alt="">
+                                            @else
+                                                <img src="{{ asset('assets/admin/img/default-150x150.png')}}" class="img-fluid">
+                                            @endif
+                                                                                    
+                                           
 
+                                            {{-- <a href="product.html"><img src="images/product-1.jpg" alt="..." class="img-fluid"></a> --}}
+                                        </div>
+                                        <div class="col">
+                                            <!-- Title -->
+                                            <p class="mb-4 fs-sm fw-bold">
+                                                <a class="text-body" href="#">{{ $orderItem -> name}} x {{ $orderItem -> qty}}</a> <br>
+                                                <span class="text-muted">${{ number_format($orderItem -> price,2)}}</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="col">
-
-                                        <!-- Title -->
-                                        <p class="mb-4 fs-sm fw-bold">
-                                            <a class="text-body" href="#">Sweatshirt with Pocket</a> <br>
-                                            <span class="text-muted">$39.00</span>
-                                        </p>
-                                        
-                                    </div>
-                                </div>
-                            </li>
+                                </li>  
+                            @endforeach
+                           
+                         
                         </ul>
                     </div>                      
                 </div>

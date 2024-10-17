@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\OrderItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -103,6 +104,15 @@ class AuthController extends Controller
 
     public function orderDetail($id){
         $data = [];
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)->where('id', $id)->first();
+        $data ['order'] = $order;
+
+        $orderItems = OrderItems::where('order_id', $id)->get();
+
+        $data ['orderItems'] = $orderItems;
+
+
         return view('front.account.order-detail', $data);
     }
 }
