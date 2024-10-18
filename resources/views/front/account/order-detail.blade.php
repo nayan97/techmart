@@ -131,19 +131,19 @@
                         <ul>
                             <li class="list-group-item d-flex">
                                 <span>Subtotal</span>
-                                <span class="ms-auto">$128.00</span>
+                                <span class="ms-auto">${{ number_format($order->subtotal,2)}}</span>
                             </li>
                             <li class="list-group-item d-flex">
-                                <span>Tax</span>
-                                <span class="ms-auto">$0.00</span>
+                                <span>Discount {{ (!empty($order->coupon_code)) ? '('.$order->coupon_code.')' : '' }} </span>
+                                <span class="ms-auto">${{ number_format($order->discount,2)}}</span>
                             </li>
                             <li class="list-group-item d-flex">
                                 <span>Shipping</span>
-                                <span class="ms-auto">$8.00</span>
+                                <span class="ms-auto">${{ number_format($order->shipping,2)}}</span>
                             </li>
                             <li class="list-group-item d-flex fs-lg fw-bold">
                                 <span>Total</span>
-                                <span class="ms-auto">$136.00</span>
+                                <span class="ms-auto">${{ number_format($order->grand_total,2)}}</span>
                             </li>
                         </ul>
                     </div>

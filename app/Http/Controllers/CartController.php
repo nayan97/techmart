@@ -248,7 +248,7 @@ class CartController extends Controller
 
                 $shipping = 0;
                 $discount = 0;
-                $discountCodeId = '';
+                $discountCodeId = NULL;
                 $promoCode = '';
                 $subTotal = Cart::subtotal(2,'.','');
 
