@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\Admin\TempImgController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -105,7 +106,11 @@ Route::group(['prefix' => 'admin',], function(){
         Route::post('/shipping', [ShippingController::class, 'store'])->name('shipping.store');           
         Route::get('/shipping/{id}', [ShippingController::class, 'edit'])->name('shipping.edit');           
         Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');           
-        Route::delete('/shipping/{id}', [ShippingController::class, 'destroy'])->name('shipping.delete');           
+        Route::delete('/shipping/{id}', [ShippingController::class, 'destroy'])->name('shipping.delete');  
+        
+        // order routes
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
    
 
 
