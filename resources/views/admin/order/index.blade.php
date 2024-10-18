@@ -48,72 +48,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
-                            <tr>
-                                <td><a href="order-detail.html">OR756374</a></td>
-                                <td>Mohit Singh</td>
-                                <td>example@example.com</td>
-                                <td>12345678</td>
-                                <td>
-                                    <span class="badge bg-success">Delivered</span>
-                                </td>
-                                <td>$400</td>
-                                <td>Nov 20, 2022</td>																				
-                            </tr>
+                            @if ($orders->isNotEmpty())
+                                @foreach ($orders as $order)
+                                <tr>
+                                    <td><a href="order-detail.html">{{ $order->id}}</a></td>
+                                    <td>{{ $order->name}}</td>
+                                    <td>{{ $order->email}}</td>
+                                    <td>{{ $order->mobile}}</td>
+                                    <td>
+                                        @if ($order->status == 'pending')
+                                          <span class="badge bg-danger">Pending</span>
+                                        @elseif ($order->status == 'shipped')
+                                          <span class="badge bg-info">Shipped</span>
+                                        @else
+                                          <span class="badge bg-success">Delivered</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($order->grand_total,2)}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y') }}</td>																				
+                                </tr>
+                                @endforeach
+                                
+                            @else
+                                
+                            @endif
+                         
+            
                         </tbody>
                     </table>										
                 </div>
