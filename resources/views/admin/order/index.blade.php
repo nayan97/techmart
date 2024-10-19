@@ -56,7 +56,7 @@
                             @if ($orders->isNotEmpty())
                                 @foreach ($orders as $order)
                                 <tr>
-                                    <td><a href="order-detail.html">{{ $order->id}}</a></td>
+                                    <td><a href="{{ route('orders.detail', $order->id)}}">{{ $order->id}}</a></td>
                                     <td>{{ $order->name}}</td>
                                     <td>{{ $order->email}}</td>
                                     <td>{{ $order->mobile}}</td>
@@ -84,11 +84,12 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination m-0 float-right">
-                      <li class="page-item"><a class="page-link" href="#">«</a></li>
+                        {{ $orders-> links()}}
+                      {{-- <li class="page-item"><a class="page-link" href="#">«</a></li>
                       <li class="page-item"><a class="page-link" href="#">1</a></li>
                       <li class="page-item"><a class="page-link" href="#">2</a></li>
                       <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">»</a></li>
+                      <li class="page-item"><a class="page-link" href="#">»</a></li> --}}
                     </ul>
                 </div>
             </div>
