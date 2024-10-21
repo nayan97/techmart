@@ -37,6 +37,12 @@ class OrderController extends Controller
 
 
     public function detail($id){
-        return view('admin.order.order-detail');
+        $order = Order::select('orders.*', 'countries.name as countryName')
+        ->where('orders.id', $id)
+        ->leftJoin('countries', 'countries.id', 'orders.country_id')
+        ->first();
+        return view('admin.order.order-detail',[
+            'order' => $order
+        ]);
     }
 }

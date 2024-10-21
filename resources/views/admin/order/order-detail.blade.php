@@ -8,10 +8,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Order: #4F3S8J</h1>
+                    <h1>Order: #{{ $order->id}}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="orders.html" class="btn btn-primary">Back</a>
+                    <a href="{{ route('orders.index')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -29,22 +29,30 @@
                                 <div class="col-sm-4 invoice-col">
                                 <h1 class="h5 mb-3">Shipping Address</h1>
                                 <address>
-                                    <strong>Mohit Singh</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    Phone: (804) 123-5432<br>
-                                    Email: info@example.com
+                                    <strong>{{ $order->first_name.' '.$order->last_name}}</strong><br>
+                                   {{ $order->address}}<br>
+                                   {{ $order->city}},  {{ $order->zip}}<br>
+                                    Country:  {{ $order->countryName}}<br>
+                                    Phone:  {{ $order->mobile}}<br>
+                                    Email:  {{ $order->email}}
                                 </address>
                                 </div>
                                 
                                 
                                 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Invoice #007612</b><br>
+                                    {{-- <b>Invoice #007612</b><br> --}}
                                     <br>
-                                    <b>Order ID:</b> 4F3S8J<br>
-                                    <b>Total:</b> $90.40<br>
-                                    <b>Status:</b> <span class="text-success">Delivered</span>
+                                    <b>Order ID:</b>{{ $order->id}}<br>
+                                    <b>Total:</b> ${{ number_format($order->grand_total,2)}}<br>
+                                    <b>Status:</b>
+                                    @if ($order->status == 'pending')
+                                        <span class="text-danger">Pending</span>
+                                    @elseif ($order->status == 'shipped')
+                                        <span class="text-info">Shipped</span>
+                                    @else
+                                        <span class="text-success">Delivered</span>
+                                    @endif
                                     <br>
                                 </div>
                             </div>
