@@ -171,8 +171,13 @@ class CartController extends Controller
             foreach (Cart::content() as $item){
                 $totalQty += $item->qty;
             }
-    
-            $totalShippingCharge = $totalQty*$shippingInfo->amount;
+            if ($shippingInfo !== null) {
+                $totalShippingCharge = $totalQty * $shippingInfo->amount;
+            } else {
+                // Handle case where shipping info is not found, maybe set a default shipping charge
+                $totalShippingCharge = 20;  // Or any default value
+            }
+         
             $grandTotal = ($subTotal-$discount)+$totalShippingCharge;
 
         } else {
