@@ -23,6 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9">
+                    @include('admin.validate')
                     <div class="card">
                         <div class="card-header pt-3">
                             <div class="row invoice-info">
@@ -50,6 +51,8 @@
                                         <span class="text-danger">Pending</span>
                                     @elseif ($order->status == 'shipped')
                                         <span class="text-info">Shipped</span>
+                                    @elseif ($order->status == 'cancelled')
+                                        <span class="text-warning">Cancelled</span>
                                     @else
                                         <span class="text-success">Delivered</span>
                                     @endif
@@ -100,20 +103,27 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-body">
-                            <h2 class="h4 mb-3">Order Status</h2>
-                            <div class="mb-3">
-                                <select name="status" id="status" class="form-control">
-                                    <option value="pending" {{ ($order->status == 'pending') ? 'selected' : '' }}>Pending</option>
-                                    <option value="shipped" {{ ($order->status == 'shipped') ? 'selected' : '' }}>Shipped</option>
-                                    <option value="deleverd" {{ ($order->status == 'deleverd') ? 'selected' : '' }}>Delivered</option>
-                                    {{-- <option value="">Cancelled</option> --}}
-                                </select>
+                        <form action="" method="post" name="changeOrderStatus" id="changeOrderStatus">
+                            <div class="card-body">
+                                <h2 class="h4 mb-3">Order Status</h2>
+                                <div class="mb-3">
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="pending" {{ ($order->status == 'pending') ? 'selected' : '' }}>Pending</option>
+                                        <option value="shipped" {{ ($order->status == 'shipped') ? 'selected' : '' }}>Shipped</option>
+                                        <option value="deleverd" {{ ($order->status == 'deleverd') ? 'selected' : '' }}>Delivered</option>
+                                        <option value="cancelled" {{ ($order->status == 'cancelled') ? 'selected' : '' }}>Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">Shipped Date</label>
+                                    <input type="text" name="shipped_date" id="shipped_date" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary">Update</button>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
+                        </form>
+                       
                     </div>
                     <div class="card">
                         <div class="card-body">
@@ -140,5 +150,42 @@
 @endsection
 
 @section('customJs')
+<script> 
+    $(document).ready(function(){
+        $('#shipped_date').datetimepicker({
+            // options here
+            format:'Y-m-d H:i:s',
+        });
+    });
+
+    $("#changeOrderStatus").submit(function(event){
+        event.preventDefault();
+
+        $.ajax({
+            url:'{{ route("orders.updateStatus",$order->id) }}',
+            type:'post',
+            data: $(this).serializeArray(),
+            dataType:'json',
+            success: function(response){
+                $("button[type=submit]").prop('disabled', false);
+                if (response["status"] == true){
+                    window.location.href="{{ route('orders.detail',$order->id)}}";
+                 
+
+                }else{
+                      
+                    
+      
+                }
+   
+
+            }, error: function(jqXHR, exception){
+
+            }
+
+        });
+
+    });
+</script>
 
 @endsection

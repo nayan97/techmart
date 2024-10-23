@@ -50,4 +50,18 @@ class OrderController extends Controller
             'orderItems' => $orderItems
         ]);
     }
+
+    public function changeOrderStatus(Request $request, $id){
+        $order = Order::find($id);
+        $order->status = $request->status;
+        $order->shipping_date = $request->shipped_date;
+        $order->save();
+
+        session()->flash('success', 'Order status updated successfully');
+
+        return response()->json([
+            'status' => 'true',
+            'message' => 'Order status updated successfully'
+        ]);
+    }
 }
