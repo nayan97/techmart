@@ -37,6 +37,12 @@
                                     Phone:  {{ $order->mobile}}<br>
                                     Email:  {{ $order->email}}
                                 </address>
+                                <strong>Shipped date:</strong>
+                                @if (!empty($order->shipping_date))
+                                {{ \Carbon\Carbon::parse($order->shipped_date)->format('d M, Y') }}
+                            @else
+                               n/a 
+                            @endif
                                 </div>
                                 
                                 
@@ -116,7 +122,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="">Shipped Date</label>
-                                    <input type="text" name="shipped_date" id="shipped_date" class="form-control">
+                                    <input placeholder="Shipped Date" value="{{ $order->shipping_date}}" type="text" name="shipped_date" id="shipped_date" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <button class="btn btn-primary">Update</button>
@@ -167,16 +173,9 @@
             data: $(this).serializeArray(),
             dataType:'json',
             success: function(response){
-                $("button[type=submit]").prop('disabled', false);
-                if (response["status"] == true){
-                    window.location.href="{{ route('orders.detail',$order->id)}}";
-                 
-
-                }else{
-                      
-                    
-      
-                }
+                window.location.href="{{ route('orders.detail',$order->id)}}";
+                // $("button[type=submit]").prop('disabled', false);
+    
    
 
             }, error: function(jqXHR, exception){
