@@ -10,4 +10,8 @@ class Order extends Model
     use HasFactory;
 
     protected $gurded = [];
+
+    public function items(){
+        return $this->hasMany(OrderItems::class);
+    }
 }

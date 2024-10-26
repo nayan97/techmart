@@ -36,6 +36,10 @@ use App\Http\Controllers\admin\ProductSubCategoryController;
 //     return view('welcome');
 // });
 
+Route::get('/test', function () {
+   orderEmail(16);
+});
+
 Route::get('/',[FrontController::class, 'index'])->name('front.index');
 Route::get('/shop/{categortSlug?}/{subCategorySlug?}',[ShopController::class, 'index'])->name('shop.index');
 Route::get('/product/{slug}',[ShopController::class, 'product'])->name('product.index');
