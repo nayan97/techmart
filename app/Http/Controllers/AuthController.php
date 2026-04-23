@@ -80,6 +80,35 @@ class AuthController extends Controller
         }
     }
 
+
+        // Show Forgot Form
+    public function showForgotForm() {
+        return view('auth.forgot');
+    }
+
+        // Step 1: Send OTP
+    public function sendOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) return back()->withErrors(['email' => 'User not found']);
+
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->save();
+
+        Mail::raw("Your OTP is: $otp", function ($msg) use ($user) {
+            $msg->to($user->email)->subject("Password Reset OTP");
+        });
+
+        session(['reset_email' => $user->email]); // store email in session
+
+        return redirect()->route('verify.form')->with('success', 'OTP sent to your email');
+    }
+
+
     // after login
 
     public function profile(){

@@ -29,6 +29,10 @@ return new class extends Migration
             $table->enum('track_qty', ['yes', 'No'])->default('Yes');
             $table->integer('qty')->nullable();
             $table->integer('status')->default(1);
+            $table->text('short_description')->nullable();
+            $table->text('shipping_returns')->nullable();
+            $table->text('related_products')->nullable();
+            
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->boolean('status') ->default(1);
             $table->foreignId('category_id') ->constrained()->onDelete('cascade');
+              $table->enum('showcat',['Yes','No'])->default('No');
             $table->timestamps();
         });
     }

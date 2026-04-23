@@ -66,6 +66,16 @@ Route::group(['prefix' => 'account',], function(){
     
         Route::get('/login', [AuthController::class, 'login'])->name('account.login');
         Route::post('/login', [AuthController::class, 'authenticate'])->name('account.authenticate');
+
+        Route::get('/forgot-password', [AuthController::class, 'showForgotForm'])->name('forgot.form');
+        Route::post('/forgot-password', [AuthController::class, 'sendOtp'])->name('forgot.password');
+
+        Route::get('/verify-otp', [AuthController::class, 'showOtpForm'])->name('verify.form');
+        Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verify.otp');
+
+        Route::get('/reset-password', [AuthController::class, 'showResetForm'])->name('reset.form');
+        Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset.password');
+
       
         
         Route::get('/register', [AuthController::class, 'register'])->name('account.register');

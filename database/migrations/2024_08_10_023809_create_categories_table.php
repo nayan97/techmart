@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('img') -> nullable();
+            $table->enum('showcat',['Yes','No'])->default('No');
             $table->boolean('status') ->default(1);
             $table->timestamps();
         });
